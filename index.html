@@ -6,123 +6,27 @@
     <title>Placement Test | American Inside Out Evolution</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary: #1a56db;
-            --secondary: #7b2cbf;
-            --success: #059669;
-            --bg: #f3f4f6;
-            --card-bg: #ffffff;
-            --text-main: #111827;
-            --text-muted: #6b7280;
-        }
-
+        :root { --primary: #1a56db; --secondary: #7b2cbf; --success: #059669; --error: #dc2626; --bg: #f3f4f6; --card-bg: #ffffff; --text-main: #111827; }
         * { box-sizing: border-box; }
-        body { 
-            font-family: 'Poppins', sans-serif; 
-            background-color: var(--bg); 
-            color: var(--text-main); 
-            margin: 0; 
-            padding: 0; 
-        }
-
-        .header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            padding: 40px 20px;
-            text-align: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-
+        body { font-family: 'Poppins', sans-serif; background-color: var(--bg); color: var(--text-main); margin: 0; padding: 0; }
+        .header { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 40px 20px; text-align: center; }
         .container { max-width: 850px; margin: -30px auto 50px; padding: 0 20px; }
-
-        .intro-card {
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 15px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
-        }
-
-        .question-card {
-            background: var(--card-bg);
-            padding: 25px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            transition: transform 0.2s;
-        }
-
+        .card { background: var(--card-bg); padding: 25px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
         .question-text { font-weight: 600; font-size: 1.1rem; margin-bottom: 15px; display: block; }
-
         .options { display: flex; flex-direction: column; gap: 10px; }
-
-        label {
-            padding: 12px 15px;
-            border: 2px solid #e5e7eb;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-        }
-
-        label:hover { background-color: #f9fafb; border-color: var(--primary); }
-
+        label { padding: 12px 15px; border: 2px solid #e5e7eb; border-radius: 10px; cursor: pointer; display: flex; align-items: center; transition: 0.2s; }
         input[type="radio"] { margin-right: 15px; transform: scale(1.2); }
-
-        input[type="radio"]:checked + span { color: var(--primary); font-weight: 600; }
+        input[type="text"] { width: 100%; padding: 12px; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 1rem; margin-top: 10px; }
         
-        input[type="radio"]:checked ~ label { border-color: var(--primary); background: #eff6ff; }
+        /* Cores de Correção */
+        .correct { border-color: var(--success) !important; background-color: #ecfdf5 !important; }
+        .incorrect { border-color: var(--error) !important; background-color: #fef2f2 !important; }
+        .feedback { font-size: 0.9rem; font-weight: bold; margin-top: 8px; display: none; }
 
-        .section-divider {
-            margin: 40px 0 20px;
-            padding: 10px;
-            background: #e5e7eb;
-            border-radius: 8px;
-            text-align: center;
-            font-weight: bold;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        #submit-btn {
-            width: 100%;
-            padding: 20px;
-            background: var(--success);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 1.25rem;
-            font-weight: 700;
-            cursor: pointer;
-            box-shadow: 0 10px 15px -3px rgba(5, 150, 105, 0.3);
-            transition: opacity 0.2s;
-        }
-
-        #submit-btn:hover { opacity: 0.9; }
-
-        #result-screen {
-            display: none;
-            text-align: center;
-            padding: 50px 20px;
-        }
-
-        .score-circle {
-            width: 150px; height: 150px;
-            background: white;
-            border: 10px solid var(--primary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin: 20px auto;
-            color: var(--primary);
-        }
-
-        .level-tag { font-size: 1.5rem; font-weight: 700; color: var(--secondary); margin-bottom: 10px; }
+        #submit-btn, #wa-btn { width: 100%; padding: 20px; color: white; border: none; border-radius: 12px; font-size: 1.25rem; font-weight: 700; cursor: pointer; margin-top: 20px; }
+        #submit-btn { background: var(--primary); }
+        #wa-btn { background: #25D366; display: none; text-decoration: none; text-align: center; }
+        #result-screen { display: none; text-align: center; }
     </style>
 </head>
 <body>
@@ -133,29 +37,31 @@
 </div>
 
 <div class="container">
-    <div class="intro-card" id="intro">
-        <h3>Instruções:</h3>
-        <p>Responda às 60 questões selecionando a melhor opção. O teste aumenta de dificuldade gradualmente. Não utilize dicionários para garantir a precisão do seu nível.</p>
+    <div class="card" id="intro">
+        <h3>Identificação</h3>
+        <p>Por favor, insira seu nome completo para começar:</p>
+        <input type="text" id="studentName" placeholder="Seu nome aqui..." required>
     </div>
 
     <form id="quizForm">
         <div id="questions-area"></div>
-        <button type="button" id="submit-btn" onclick="processResult()">ENVIAR RESPOSTAS</button>
+        <button type="button" id="submit-btn" onclick="processResult()">FINALIZAR E VER RESULTADO</button>
     </form>
 
     <div id="result-screen">
-        <div class="intro-card">
-            <h2>Resultado Final</h2>
-            <div class="score-circle" id="final-score">0</div>
-            <div class="level-tag" id="level-name">Nível</div>
+        <div class="card">
+            <h2>Parabéns, <span id="display-name"></span>!</h2>
+            <div style="font-size: 2.5rem; font-weight: 800; color: var(--primary);" id="final-score">0</div>
+            <div id="level-name" style="font-size: 1.5rem; font-weight: bold; color: var(--secondary);"></div>
             <p id="level-desc"></p>
-            <button onclick="location.reload()" style="background:none; border:none; color:var(--primary); cursor:pointer; text-decoration: underline;">Refazer o teste</button>
+            
+            <a id="wa-btn" target="_blank">ENVIAR RESULTADO PARA A ESCOLA</a>
+            <p style="font-size: 0.8rem; color: gray; margin-top: 10px;">Após clicar acima, você verá as questões que acertou abaixo.</p>
         </div>
     </div>
 </div>
 
 <script>
-    // Gabarito completo baseado no PDF enviado (Índices: a=0, b=1, c=2, d=3)
     const quizData = [
         { q: "(01) Paulo, what is your ______ name? / Pereira.", a: ["first", "over", "last", "Nikki"], c: 2 },
         { q: "(02) My name is Mario and I ______ from Argentina.", a: ["is", "be", "are", "am"], c: 3 },
@@ -164,52 +70,116 @@
         { q: "(05) What time is it? / It's ______ (2:30).", a: ["two o'clock", "twenty after three", "two thirty", "a quarter to two"], c: 2 },
         { q: "(06) ______ a park near my house.", a: ["Is", "Have", "Has", "There is"], c: 3 },
         { q: "(07) Tony is in the bathroom. He's ______ a shower.", a: ["taking", "take", "takes", "does take"], c: 0 },
-        { q: "(08) We ______ have a sandwich for lunch. We don't eat bread.", a: ["always", "usually", "sometimes", "never"], c: 3 },
+        { q: "(08) We ______ have a sandwich for lunch.", a: ["always", "usually", "sometimes", "never"], c: 3 },
         { q: "(09) Sales clerk: Can I help you? / Customer: Yes, please. ______ for a dress.", a: ["I look", "I looked", "I'm looking", "I will look"], c: 2 },
         { q: "(10) There are ______ nice restaurants here.", a: ["a", "some", "an", "any"], c: 1 },
-        // ... (Continuar com as questões 11-60 seguindo o mesmo padrão do gabarito fornecido anteriormente)
+        { q: "(11) Jon: ______? / Rosa: I'm from Caracas.", a: ["How are you?", "Where are you going?", "Where are you from?", "Do you like Caracas?"], c: 2 },
+        { q: "(12) Paul: ______? / Mary: He's a taxi driver.", a: ["What does your brother do?", "Where does your brother drive?", "How is your brother?", "Where is your brother from?"], c: 0 },
+        { q: "(13) I don't like cooking. Do you ______?", a: ["like", "like it", "like them", "like him"], c: 1 },
+        { q: "(14) What time do you usually ______ dinner?", a: ["go", "drink", "have", "spend"], c: 2 },
+        { q: "(15) I always go to the movies ______ Fridays.", a: ["on", "in", "at", "by"], c: 0 },
+        { q: "(16) Jack ______ surfing last weekend.", a: ["had", "went", "did", "took"], c: 1 },
+        { q: "(17) Can you drive?", a: ["Yes, I do.", "Yes, I am.", "No, I'm not.", "No, I can't."], c: 3 },
+        { q: "(18) There's ______ milk in the refrigerator.", a: ["a", "many", "some", "any"], c: 2 },
+        { q: "(19) Johnny Depp was wearing ______.", a: ["a beautiful skirt.", "A white dress.", "brown sweatpants.", "a black suit."], c: 3 },
+        { q: "(20) Amanda: ______ to Australia, Ginny?", a: ["Did you ever go", "Will you ever go", "Are you ever going", "Have you ever been"], c: 3 },
+        { q: "(21) There is too much ______ in Sao Paulo.", a: ["stores", "people", "problems", "traffic"], c: 3 },
+        { q: "(22) My friends send ______.", a: ["to me lots of e-mails.", "me lots of e-mails.", "lots of e-mails me.", "for me lots of e-mails."], c: 1 },
+        { q: "(23) Tokyo is ______ city I've ever lived in.", a: ["the most big", "the bigger", "the biggest", "the more big"], c: 2 },
+        { q: "(24) You ______ tell anyone about this, Sara. It's our secret.", a: ["couldnt", "would", "can't", "don't have to"], c: 2 },
+        { q: "(25) Rick loves Martha.", a: ["Who loves Rick?", "Who does Martha love?", "Who loves Martha?", "Who does love Rick?"], c: 2 },
+        { q: "(26) You ______ go home. It's getting late.", a: ["can", "would", "will", "should"], c: 3 },
+        { q: "(27) Becky has been in Thailand ______ 2004.", a: ["since", "for", "yet", "ago"], c: 0 },
+        { q: "(28) I will call you when I ______ home.", a: ["get", "will get", "got", "getting"], c: 0 },
+        { q: "(29) If you ______ me, what would you do?", a: ["was", "would be", "were", "have been"], c: 2 },
+        { q: "(30) Did you hear what happened to Kate? She ______.", a: ["is arrested", "arrested", "has been arrested", "is being arrested"], c: 2 },
+        { q: "(31) I ______ speak to my neighbor.", a: ["all the time", "hardly ever", "from time to time", "now and then"], c: 1 },
+        { q: "(32) Janet ______ Alaska yet.", a: ["wasn't in", "hasnt been to", "went to", "had gone to"], c: 1 },
+        { q: "(33) Rachel ______ out with my brother for a year now.", a: ["has gone", "went", "had been", "has been going"], c: 3 },
+        { q: "(34) We ______ have a dog called Lion when we were kids.", a: ["had", "would", "used to", "were"], c: 2 },
+        { q: "(35) Don't ______ with me - you know I'm right.", a: ["discuss", "argue", "dispute", "yell"], c: 1 },
+        { q: "(36) Sue ______ them that she was unhappy. They look sad.", a: ["will tell", "has to tell", "had been told", "must have told"], c: 3 },
+        { q: "(37) John tells me Jack's going out with Helen, ______ I find hard to believe.", a: ["that", "who", "whose", "which"], c: 3 },
+        { q: "(38) If I'd installed a GPS, I ______ on my last trip.", a: ["wont get lost", "wouldnt lose", "wouldnt get lost", "wouldnt have gotten lost"], c: 3 },
+        { q: "(39) I'm not a very good ______. I don't know how to boil an egg.", a: ["cook", "cooker", "cookery", "cooking"], c: 0 },
+        { q: "(40) I like your hair. Where ______?", a: ["you cut it", "did you have it cut", "do you cut it", "have it cut"], c: 1 },
+        { q: "(41) Lucy hasn't done her assignment and ______ have I.", a: ["so", "too", "either", "neither"], c: 3 },
+        { q: "(42) ______ tea and coffee.", a: ["Make yourself", "Help yourself to", "Let me introduce you to", "Serve yourself"], c: 1 },
+        { q: "(43) She asked me who else I ______.", a: ["invite", "invited", "have invited", "had invited"], c: 3 },
+        { q: "(44) Don't forget to ______ the light when you go out.", a: ["turn up", "turn in", "turn off", "turn over"], c: 2 },
+        { q: "(45) Try ______ some honey to stop your cough.", a: ["to have", "having", "to have had", "have"], c: 1 },
+        { q: "(46) Promising and not delivering is a ______ for disaster.", a: ["dish", "recipe", "prescription", "check"], c: 1 },
+        { q: "(47) I think Joey must ______ late tonight. His light is on.", a: ["have worked", "work", "be working", "to work"], c: 2 },
+        { q: "(48) In the painting, the person portrayed ______ he or she is in desperation.", a: ["looks", "seems", "appears", "looks as if"], c: 3 },
+        { q: "(49) Joel attached his ______ to his job application.", a: ["CV", "BSc", "DIY", "VAT"], c: 0 },
+        { q: "(50) People typically say '______ in touch.'", a: ["Be", "Stay", "Keep", "Remain"], c: 2 },
+        { q: "(51) I'm looking ______ the problem and trying to figure ______.", a: ["into...out it", "the problem...out it", "the problem...it out", "into...it out"], c: 3 },
+        { q: "(52) ______ the days when you could sit back.", a: ["Are gone", "They are gone", "Gone are", "Were gone"], c: 2 },
+        { q: "(53) Never ______ anything quite so breathtaking.", a: ["I have seen", "have I seen", "I havent seen", "have seen I"], c: 1 },
+        { q: "(54) I'm seeing ______.", a: ["a beautiful lake", "the doctor tomorrow", "you from here", "a dark spot"], c: 1 },
+        { q: "(55) ______ far the most complex systems are our bodies.", a: ["by", "very", "too", "at"], c: 0 },
+        { q: "(56) The suspect has been charged with ______.", a: ["attorney", "plaintiff", "witness", "manslaughter"], c: 3 },
+        { q: "(57) We had expected that they ______ fluent English.", a: ["were speaking", "would speak", "had spoken", "spoke"], c: 1 },
+        { q: "(58) Most people work 9-to-5 ______ I prefer flexibility.", a: ["whereas", "when", "if", "whether"], c: 0 },
+        { q: "(59) They were on the ______ of cracking the code.", a: ["corner", "due", "verge", "brink"], c: 2 },
+        { q: "(60) She can talk about ______ subject that comes up.", a: ["whatever", "whenever", "wherever", "whoever"], c: 0 }
     ];
 
-    const questionsArea = document.getElementById('questions-area');
-
-    quizData.forEach((data, i) => {
-        const card = document.createElement('div');
-        card.className = 'question-card';
-        card.innerHTML = `
-            <span class="question-text">${data.q}</span>
-            <div class="options">
-                ${data.a.map((opt, idx) => `
-                    <label>
-                        <input type="radio" name="q${i}" value="${idx}">
-                        <span>${opt}</span>
-                    </label>
-                `).join('')}
-            </div>
-        `;
-        questionsArea.appendChild(card);
+    const area = document.getElementById('questions-area');
+    quizData.forEach((d, i) => {
+        const div = document.createElement('div');
+        div.className = 'card question-item';
+        div.id = `card-${i}`;
+        div.innerHTML = `<span class="question-text">${d.q}</span><div class="options">` + 
+            d.a.map((o, idx) => `<label id="label-${i}-${idx}"><input type="radio" name="q${i}" value="${idx}"><span>${o}</span></label>`).join('') + `</div><div class="feedback" id="feedback-${i}">Resposta correta: ${d.a[d.c]}</div>`;
+        area.appendChild(div);
     });
 
     function processResult() {
-        let score = 0;
-        quizData.forEach((data, i) => {
-            const selected = document.querySelector(`input[name="q${i}"]:checked`);
-            if (selected && parseInt(selected.value) === data.c) score++;
+        const name = document.getElementById('studentName').value;
+        if(!name) { alert("Por favor, digite seu nome."); return; }
+
+        let s = 0;
+        quizData.forEach((d, i) => {
+            const r = document.querySelector(`input[name="q${i}"]:checked`);
+            const feedback = document.getElementById(`feedback-${i}`);
+            feedback.style.display = "block";
+            
+            if(r) {
+                const val = parseInt(r.value);
+                if(val === d.c) {
+                    s++;
+                    document.getElementById(`label-${i}-${val}`).classList.add('correct');
+                } else {
+                    document.getElementById(`label-${i}-${val}`).classList.add('incorrect');
+                    document.getElementById(`label-${i}-${d.c}`).classList.add('correct');
+                }
+            } else {
+                document.getElementById(`label-${i}-${d.c}`).classList.add('correct');
+            }
         });
 
-        document.getElementById('quizForm').style.display = 'none';
+        document.getElementById('quizForm').style.pointerEvents = "none";
         document.getElementById('intro').style.display = 'none';
         document.getElementById('result-screen').style.display = 'block';
-        document.getElementById('final-score').innerText = score;
+        document.getElementById('display-name').innerText = name;
+        document.getElementById('final-score').innerText = `${s}/60`;
 
-        const levelText = document.getElementById('level-name');
-        const levelDesc = document.getElementById('level-desc');
+        let level = "";
+        if(s <= 15) level = "A1 - Beginner";
+        else if(s <= 30) level = "A2 - Elementary";
+        else if(s <= 45) level = "B1/B2 - Intermediate";
+        else level = "C1 - Advanced";
 
-        if(score <= 15) { levelText.innerText = "A1 - Beginner"; levelDesc.innerText = "Você está no início da sua jornada no inglês!"; }
-        else if(score <= 30) { levelText.innerText = "A2 - Elementary"; levelDesc.innerText = "Você já possui uma base estrutural sólida."; }
-        else if(score <= 45) { levelText.innerText = "B1/B2 - Intermediate"; levelDesc.innerText = "Você consegue se comunicar em diversas situações."; }
-        else { levelText.innerText = "C1 - Advanced"; levelDesc.innerText = "Parabéns! Você possui um domínio alto do idioma."; }
+        document.getElementById('level-name').innerText = level;
         
-        window.scrollTo(0, 0);
+        // Botão WhatsApp
+        const msg = encodeURIComponent(`Olá! Sou ${name}. Finalizei o teste de nivelamento.\nAcertos: ${s}/60\nNível: ${level}`);
+        const waBtn = document.getElementById('wa-btn');
+        waBtn.href = `https://wa.me/5519991717549?text=${msg}`;
+        waBtn.style.display = "block";
+
+        window.scrollTo(0,0);
     }
 </script>
 </body>
