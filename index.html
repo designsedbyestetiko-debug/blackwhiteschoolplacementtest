@@ -3,67 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Placement Test | Black & White School</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Placement Test | Black White School</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #1a56db; --secondary: #7b2cbf; --success: #059669; --error: #dc2626; --bg: #f3f4f6; --card-bg: #ffffff; --text-main: #111827; }
-        * { box-sizing: border-box; }
-        body { font-family: 'Poppins', sans-serif; background-color: var(--bg); color: var(--text-main); margin: 0; padding: 0; }
-        .header { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 40px 20px; text-align: center; }
-        .container { max-width: 850px; margin: -30px auto 50px; padding: 0 20px; }
-        .card { background: var(--card-bg); padding: 25px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        :root { --primary: #000000; --accent: #7b2cbf; --bg: #f8f9fa; --white: #ffffff; --success: #25D366; --error: #ef4444; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
+        body { background-color: var(--bg); color: #333; overflow-x: hidden; }
+        
+        /* Layout Moderno */
+        .navbar { background: var(--white); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 1000; }
+        .logo { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.2rem; letter-spacing: -1px; }
+        .logo span { color: var(--accent); }
+
+        .hero { background: var(--primary); color: var(--white); padding: 60px 20px; text-align: center; }
+        .hero h1 { font-family: 'Montserrat', sans-serif; font-size: 2.5rem; margin-bottom: 10px; }
+        
+        .container { max-width: 800px; margin: -40px auto 60px; padding: 0 20px; position: relative; }
+        .card { background: var(--white); padding: 40px; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
+
+        /* Estilo das Questões */
+        .step { display: none; animation: fadeIn 0.5s ease; }
+        .step.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .instruction-box { background: #f0f4ff; padding: 20px; border-left: 5px solid var(--accent); border-radius: 8px; margin-bottom: 30px; font-size: 0.95rem; }
+        .question-item { margin-bottom: 35px; border-bottom: 1px solid #eee; padding-bottom: 20px; }
         .question-text { font-weight: 600; font-size: 1.1rem; margin-bottom: 15px; display: block; }
-        .options { display: flex; flex-direction: column; gap: 10px; }
-        label { padding: 12px 15px; border: 2px solid #e5e7eb; border-radius: 10px; cursor: pointer; display: flex; align-items: center; transition: 0.2s; }
-        input[type="radio"] { margin-right: 15px; transform: scale(1.2); }
-        input[type="text"] { width: 100%; padding: 12px; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 1rem; margin-top: 10px; }
-        .correct { border-color: var(--success) !important; background-color: #ecfdf5 !important; }
-        .incorrect { border-color: var(--error) !important; background-color: #fef2f2 !important; }
-        .feedback { font-size: 0.9rem; font-weight: bold; margin-top: 8px; display: none; color: var(--primary); }
-        #submit-btn, #wa-btn { width: 100%; padding: 20px; color: white; border: none; border-radius: 12px; font-size: 1.25rem; font-weight: 700; cursor: pointer; margin-top: 20px; transition: 0.3s; }
-        #submit-btn { background: var(--primary); }
-        #submit-btn:hover { background: #1e40af; }
-        #wa-btn { background: #25D366; display: none; text-decoration: none; text-align: center; }
-        #result-screen { display: none; text-align: center; }
-        .section-title { font-size: 0.9rem; color: var(--secondary); font-weight: bold; text-transform: uppercase; margin-bottom: 10px; display: block; }
+        
+        .options-grid { display: grid; gap: 12px; }
+        label { padding: 15px; border: 2px solid #e2e8f0; border-radius: 12px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; }
+        label:hover { border-color: var(--accent); background: #f9f5ff; }
+        input[type="radio"] { margin-right: 15px; accent-color: var(--accent); width: 18px; height: 18px; }
+        input[type="radio"]:checked + span { font-weight: 600; }
+
+        /* Botões */
+        .btn { padding: 16px 32px; border-radius: 12px; border: none; font-weight: 700; cursor: pointer; transition: 0.3s; font-size: 1rem; width: 100%; }
+        .btn-primary { background: var(--accent); color: white; }
+        .btn-primary:hover { background: #6924a3; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(123, 44, 191, 0.3); }
+        .btn-wa { background: var(--success); color: white; text-decoration: none; display: inline-block; margin-top: 20px; text-align: center; }
+
+        /* Transição de Nível */
+        .level-up { text-align: center; padding: 40px 20px; }
+        .level-up h2 { font-family: 'Montserrat', sans-serif; color: var(--accent); font-size: 2rem; margin-bottom: 15px; }
+
+        /* Progress Bar */
+        .progress-container { width: 100%; background: #e2e8f0; height: 8px; border-radius: 10px; margin: 20px 0 40px; overflow: hidden; }
+        .progress-bar { height: 100%; background: var(--accent); width: 0%; transition: 0.5s; }
+
+        /* Feedback Final */
+        .correct { border-color: var(--success) !important; background: #f0fff4 !important; }
+        .incorrect { border-color: var(--error) !important; background: #fff5f5 !important; }
+        .score-display { font-size: 4rem; font-weight: 800; color: var(--accent); margin: 20px 0; }
+        footer { text-align: center; padding: 40px; color: #94a3b8; font-size: 0.8rem; }
     </style>
 </head>
 <body>
 
-<div class="header">
-    <h1>English Leveling Test</h1>
-    <p>Black & White School - Placement Assessment</p>
+<nav class="navbar">
+    <div class="logo">BLACK <span>WHITE</span> SCHOOL</div>
+</nav>
+
+<div class="hero">
+    <h1>Placement Test</h1>
+    <p>American Inside Out Evolution Assessment</p>
 </div>
 
 <div class="container">
-    <div class="card" id="intro">
-        <h3>Bem-vindo!</h3>
-        <p>Preencha seu nome completo para iniciar a prova de 60 questões.</p>
-        <input type="text" id="studentName" placeholder="Digite seu nome aqui..." required>
-    </div>
+    <div class="progress-container"><div class="progress-bar" id="progress"></div></div>
 
-    <form id="quizForm">
-        <div id="questions-area"></div>
-        <button type="button" id="submit-btn" onclick="processResult()">ENVIAR RESPOSTAS</button>
-    </form>
-
-    <div id="result-screen">
-        <div class="card">
-            <h2>Resultado de <span id="display-name"></span></h2>
-            <div style="font-size: 3rem; font-weight: 800; color: var(--primary);" id="final-score">0</div>
-            <div id="level-name" style="font-size: 1.8rem; font-weight: bold; color: var(--secondary); margin-bottom: 15px;"></div>
-            <p id="level-desc" style="font-size: 1.1rem; color: #4b5563;"></p>
+    <div class="card">
+        <div class="step active" id="step-0">
+            <h2 style="margin-bottom:20px; font-family:'Montserrat'">Teste de Nivelamento Online</h2>
+            <p style="margin-bottom:20px">Bem-vindo ao nosso portal! Este teste ajuda a identificar suas habilidades atuais para te alocar na turma certa.</p>
             
-            <a id="wa-btn" target="_blank">NOTIFICAR ESCOLA PELO WHATSAPP</a>
-            <hr style="margin: 30px 0; border: 0; border-top: 1px solid #e5e7eb;">
-            <p>Confira abaixo suas respostas detalhadas:</p>
+            <div class="instruction-box">
+                <strong>Como funciona?</strong><br>
+                Dividido em 6 seções estratégicas (Fundamentos, Desenvolvimento e Domínio).<br><br>
+                • Seja honesto: não use tradutores.<br>
+                • Tempo estimado: 20 a 30 minutos.
+            </div>
+
+            <input type="text" id="studentName" placeholder="Seu nome completo" class="btn" style="border:2px solid #eee; margin-bottom:20px; color:#333; text-align:left; font-weight:400">
+            <button class="btn btn-primary" onclick="nextStep(1)">COMEÇAR AGORA</button>
+        </div>
+
+        <div id="quiz-content"></div>
+
+        <div class="step" id="step-result">
+            <div style="text-align:center">
+                <h3>Mandou bem, <span id="res-name"></span>!</h3>
+                <div class="score-display" id="res-score">0/60</div>
+                <h2 id="res-level" style="margin-bottom:10px">Nível</h2>
+                <p id="res-desc" style="color:#64748b; margin-bottom:30px"></p>
+                <a id="wa-link" class="btn btn-wa" target="_blank">NOTIFICAR ESCOLA NO WHATSAPP</a>
+                <p style="margin-top:40px; font-size:0.9rem; font-weight:bold; color:var(--accent)">Role para baixo para ver o gabarito detalhado!</p>
+            </div>
+            <div id="review-area" style="margin-top:50px"></div>
         </div>
     </div>
 </div>
 
+<footer>
+    American Inside Out Evolution Placement Test Photocopiable D.R. © Macmillan Education 2017
+</footer>
+
 <script>
-    const quizData = [
-        // SECTION 1
+    // Banco de Dados das 60 questões (Sourced from Macmillan Education 2017)
+    const questions = [
+        [cite_start]// Seção 1 (Fundamentos) [cite: 4]
         { q: "(01) Paulo, what is your ______ name? / Pereira.", a: ["first", "over", "last", "Nikki"], c: 2 },
         { q: "(02) My name is Mario and I ______ from Argentina.", a: ["is", "be", "are", "am"], c: 3 },
         { q: "(03) Prince Harry is Prince William's ______.", a: ["husband", "sister", "grandson", "brother"], c: 3 },
@@ -74,7 +121,7 @@
         { q: "(08) We ______ have a sandwich for lunch. We don't eat bread.", a: ["always", "usually", "sometimes", "never"], c: 3 },
         { q: "(09) Sales clerk: Can I help you? / Customer: Yes, please. ______ for a dress.", a: ["I look", "I looked", "I'm looking", "I will look"], c: 2 },
         { q: "(10) There are ______ nice restaurants here.", a: ["a", "some", "an", "any"], c: 1 },
-        // SECTION 2
+        [cite_start]// Seção 2 [cite: 115]
         { q: "(11) Jon: ______? / Rosa: I'm from Caracas.", a: ["How are you?", "Where are you going?", "Where are you from?", "Do you like Caracas?"], c: 2 },
         { q: "(12) Paul: ______? / Mary: He's a taxi driver.", a: ["What does your brother do?", "Where does your brother drive?", "How is your brother?", "Where is your brother from?"], c: 0 },
         { q: "(13) I don't like cooking. Do you ______?", a: ["like", "like it", "like them", "like him"], c: 1 },
@@ -82,102 +129,149 @@
         { q: "(15) I always go to the movies ______ Fridays.", a: ["on", "in", "at", "by"], c: 0 },
         { q: "(16) Jack ______ surfing last weekend.", a: ["had", "went", "did", "took"], c: 1 },
         { q: "(17) Can you drive?", a: ["Yes, I do.", "Yes, I am.", "No, I'm not.", "No, I can't."], c: 3 },
-        { q: "(18) There's ______ milk in the refrigerator. Would you like a cup?", a: ["a", "many", "some", "any"], c: 2 },
+        { q: "(18) There's ______ milk in the refrigerator.", a: ["a", "many", "some", "any"], c: 2 },
         { q: "(19) Johnny Depp was wearing ______.", a: ["a beautiful skirt.", "A white dress.", "brown sweatpants.", "a black suit."], c: 3 },
-        { q: "(20) Amanda: ______ to Australia, Ginny? / Ginny: No, I haven't.", a: ["Did you ever go", "Will you ever go", "Are you ever going", "Have you ever been"], c: 3 },
-        // SECTION 3
+        { q: "(20) Amanda: ______ to Australia, Ginny? / No, I haven't.", a: ["Did you ever go", "Will you ever go", "Are you ever going", "Have you ever been"], c: 3 },
+        [cite_start]// Seção 3 (Desenvolvimento) [cite: 224]
         { q: "(21) There is too much ______ in Sao Paulo.", a: ["stores", "people", "problems", "traffic"], c: 3 },
         { q: "(22) My friends send ______.", a: ["to me lots of e-mails.", "me lots of e-mails.", "lots of e-mails me.", "for me lots of e-mails."], c: 1 },
         { q: "(23) Tokyo is ______ city I've ever lived in.", a: ["the most big", "the bigger", "the biggest", "the more big"], c: 2 },
-        { q: "(24) You ______ tell anyone about this, Sara. It's our secret, OK?", a: ["couldn't", "would", "can't", "don't have to"], c: 2 },
-        { q: "(25) Rick loves Martha. ______?", a: ["Who loves Rick?", "Who does Martha love?", "Who loves Martha?", "Who does love Rick?"], c: 2 },
-        { q: "(26) You ______ go home. It's getting late and your mother must be worried.", a: ["can", "would", "will", "should"], c: 3 },
+        { q: "(24) You ______ tell anyone about this, Sara. It's our secret.", a: ["couldnt", "would", "can't", "don't have to"], c: 2 },
+        { q: "(25) Rick loves Martha.", a: ["Who loves Rick?", "Who does Martha love?", "Who loves Martha?", "Who does love Rick?"], c: 2 },
+        { q: "(26) You ______ go home. It's getting late.", a: ["can", "would", "will", "should"], c: 3 },
         { q: "(27) Becky has been in Thailand ______ 2004.", a: ["since", "for", "yet", "ago"], c: 0 },
         { q: "(28) I will call you when I ______ home.", a: ["get", "will get", "got", "getting"], c: 0 },
         { q: "(29) If you ______ me, what would you do?", a: ["was", "would be", "were", "have been"], c: 2 },
         { q: "(30) Did you hear what happened to Kate? She ______.", a: ["is arrested", "arrested", "has been arrested", "is being arrested"], c: 2 },
-        // SECTION 4
+        [cite_start]// Seção 4 [cite: 332]
         { q: "(31) I ______ speak to my neighbor.", a: ["all the time", "hardly ever", "from time to time", "now and then"], c: 1 },
-        { q: "(32) Janet ______ Alaska yet.", a: ["wasn't in", "hasn't been to", "went to", "had gone to"], c: 1 },
+        { q: "(32) Janet ______ Alaska yet.", a: ["wasn't in", "hasnt been to", "went to", "had gone to"], c: 1 },
         { q: "(33) Rachel ______ out with my brother for a year now.", a: ["has gone", "went", "had been", "has been going"], c: 3 },
         { q: "(34) We ______ have a dog called Lion when we were kids.", a: ["had", "would", "used to", "were"], c: 2 },
         { q: "(35) Don't ______ with me - you know I'm right.", a: ["discuss", "argue", "dispute", "yell"], c: 1 },
-        { q: "(36) Sue ______ them that she was unhappy with their work.", a: ["will tell", "has to tell", "had been told", "must have told"], c: 3 },
+        { q: "(36) Sue ______ them that she was unhappy. They look sad.", a: ["will tell", "has to tell", "had been told", "must have told"], c: 3 },
         { q: "(37) John tells me Jack's going out with Helen, ______ I find hard to believe.", a: ["that", "who", "whose", "which"], c: 3 },
-        { q: "(38) If I'd installed a GPS in my car, I ______ on my last trip.", a: ["won't get lost", "wouldn't lose", "wouldn't get lost", "wouldnt have gotten lost"], c: 3 },
-        { q: "(39) I'm not a very good ______. I don't even know how to boil an egg.", a: ["cook", "cooker", "cookery", "cooking"], c: 0 },
+        { q: "(38) If I'd installed a GPS, I ______ on my last trip.", a: ["wont get lost", "wouldnt lose", "wouldnt get lost", "wouldnt have gotten lost"], c: 3 },
+        { q: "(39) I'm not a very good ______. I don't know how to boil an egg.", a: ["cook", "cooker", "cookery", "cooking"], c: 0 },
         { q: "(40) I like your hair. Where ______?", a: ["you cut it", "did you have it cut", "do you cut it", "have it cut"], c: 1 },
-        // SECTION 5
+        [cite_start]// Seção 5 (Domínio e Fluência) [cite: 444]
         { q: "(41) Lucy hasn't done her assignment and ______ have I.", a: ["so", "too", "either", "neither"], c: 3 },
         { q: "(42) ______ tea and coffee.", a: ["Make yourself", "Help yourself to", "Let me introduce you to", "Serve yourself"], c: 1 },
         { q: "(43) She asked me who else I ______.", a: ["invite", "invited", "have invited", "had invited"], c: 3 },
         { q: "(44) Don't forget to ______ the light when you go out.", a: ["turn up", "turn in", "turn off", "turn over"], c: 2 },
-        { q: "(45) Try ______ some honey to stop your cough. It usually works for me.", a: ["to have", "having", "to have had", "have"], c: 1 },
-        { q: "(46) Promising something to your client and not delivering it is a ______ for disaster.", a: ["dish", "recipe", "prescription", "check"], c: 1 },
-        { q: "(47) I think Joey must ______ late tonight. His office light is still on.", a: ["have worked", "work", "be working", "to work"], c: 2 },
-        { q: "(48) The person portrayed ______ he or she is in complete desperation.", a: ["looks", "seems", "appears", "looks as if"], c: 3 },
+        { q: "(45) Try ______ some honey to stop your cough.", a: ["to have", "having", "to have had", "have"], c: 1 },
+        { q: "(46) Promising and not delivering is a ______ for disaster.", a: ["dish", "recipe", "prescription", "check"], c: 1 },
+        { q: "(47) I think Joey must ______ late tonight. His light is on.", a: ["have worked", "work", "be working", "to work"], c: 2 },
+        { q: "(48) In the painting, the person portrayed ______ he or she is in desperation.", a: ["looks", "seems", "appears", "looks as if"], c: 3 },
         { q: "(49) Joel attached his ______ to his job application.", a: ["CV", "BSc", "DIY", "VAT"], c: 0 },
-        { q: "(50) At the end of conversations, people typically say '______ in touch.'", a: ["Be", "Stay", "Keep", "Remain"], c: 2 },
-        // SECTION 6
-        { q: "(51) I'm looking ______ the problem and trying to figure ______.", a: ["into the problem / out it", "the problem into / out it", "the problem into / it out", "into the problem / it out"], c: 3 },
-        { q: "(52) ______ the days when you could sit back and do nothing.", a: ["Are gone", "They are gone", "Gone are", "Were gone"], c: 2 },
-        { q: "(53) Never ______ anything quite so breathtaking.", a: ["I have seen", "have I seen", "I haven't seen", "have seen I"], c: 1 },
-        { q: "(54) I'm seeing ______.", a: ["a beautiful lake", "the doctor tomorrow", "you from here", "a dark spot on my shirt"], c: 1 },
-        { q: "(55) ______ far the most complex systems we have are our own bodies.", a: ["by", "very", "too", "at"], c: 0 },
+        { q: "(50) People typically say '______ in touch.'", a: ["Be", "Stay", "Keep", "Remain"], c: 2 },
+        [cite_start]// Seção 6 [cite: 553]
+        { q: "(51) I'm looking ______ the problem and trying to figure ______.", a: ["into...out it", "the problem...out it", "the problem...it out", "into...it out"], c: 3 },
+        { q: "(52) ______ the days when you could sit back.", a: ["Are gone", "They are gone", "Gone are", "Were gone"], c: 2 },
+        { q: "(53) Never ______ anything quite so breathtaking.", a: ["I have seen", "have I seen", "I havent seen", "have seen I"], c: 1 },
+        { q: "(54) I'm seeing ______.", a: ["a beautiful lake", "the doctor tomorrow", "you from here", "a dark spot"], c: 1 },
+        { q: "(55) ______ far the most complex systems are our bodies.", a: ["by", "very", "too", "at"], c: 0 },
         { q: "(56) The suspect has been charged with ______.", a: ["attorney", "plaintiff", "witness", "manslaughter"], c: 3 },
-        { q: "(57) We had expected that they ______ fluent English, but in fact they didn't.", a: ["were speaking", "would speak", "had spoken", "spoke"], c: 1 },
-        { q: "(58) Most people prefer to work a 9-to-5 day ______ I prefer flexibility.", a: ["whereas", "when", "if", "whether"], c: 0 },
-        { q: "(59) They were on the ______ of cracking the code, but the other team figured it out first.", a: ["corner", "due", "verge", "brink"], c: 2 },
-        { q: "(60) Harriet is so knowledgeable. She can talk about ______ subject that comes up.", a: ["whatever", "whenever", "wherever", "whoever"], c: 0 }
+        { q: "(57) We had expected that they ______ fluent English.", a: ["were speaking", "would speak", "had spoken", "spoke"], c: 1 },
+        { q: "(58) Most people work 9-to-5 ______ I prefer flexibility.", a: ["whereas", "when", "if", "whether"], c: 0 },
+        { q: "(59) They were on the ______ of cracking the code.", a: ["corner", "due", "verge", "brink"], c: 2 },
+        { q: "(60) She can talk about ______ subject that comes up.", a: ["whatever", "whenever", "wherever", "whoever"], c: 0 }
     ];
 
-    const area = document.getElementById('questions-area');
-    quizData.forEach((d, i) => {
-        const sectionNum = Math.floor(i / 10) + 1;
-        let sectionHeader = (i % 10 === 0) ? `<span class="section-title">Section ${sectionNum}</span>` : "";
+    let currentStep = 0;
+    const studentAnswers = {};
+
+    function generateQuiz() {
+        const quizContent = document.getElementById('quiz-content');
+        for (let i = 0; i < 6; i++) {
+            const stepDiv = document.createElement('div');
+            stepDiv.className = 'step';
+            stepDiv.id = `step-${i+1}`;
+            
+            // Mensagens motivacionais
+            let header = "";
+            if(i === 2) header = `<div class="level-up"><h2>Agora vamos dificultar mais um pouquinho?</h2><p>Você entrou na fase de Desenvolvimento!</p></div>`;
+            if(i === 4) header = `<div class="level-up"><h2>Bem-vindo ao próximo nível, buddy!</h2><p>Hora de mostrar sua Fluência!</p></div>`;
+            
+            let questionsHtml = header + `<h3 style="margin-bottom:25px">Página ${i+1} de 6</h3>`;
+            
+            for (let j = 0; j < 10; j++) {
+                const qIdx = (i * 10) + j;
+                const q = questions[qIdx];
+                questionsHtml += `
+                    <div class="question-item">
+                        <span class="question-text">${q.q}</span>
+                        <div class="options-grid">
+                            ${q.a.map((opt, optIdx) => `
+                                <label>
+                                    <input type="radio" name="q${qIdx}" value="${optIdx}" onclick="saveAnswer(${qIdx}, ${optIdx})">
+                                    <span>${opt}</span>
+                                </label>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            const btnText = (i === 5) ? "FINALIZAR TESTE" : "PRÓXIMA PÁGINA";
+            const btnAction = (i === 5) ? "calculateResult()" : `nextStep(${i+2})`;
+            
+            questionsHtml += `<button class="btn btn-primary" onclick="${btnAction}">${btnText}</button>`;
+            stepDiv.innerHTML = questionsHtml;
+            quizContent.appendChild(stepDiv);
+        }
+    }
+
+    function saveAnswer(qIdx, optIdx) { studentAnswers[qIdx] = optIdx; }
+
+    function nextStep(step) {
+        if(step === 1 && !document.getElementById('studentName').value) { alert("Please enter your name!"); return; }
         
-        const div = document.createElement('div');
-        div.className = 'card question-item';
-        div.innerHTML = sectionHeader + `<span class="question-text">${d.q}</span><div class="options">` + 
-            d.a.map((o, idx) => `<label id="label-${i}-${idx}"><input type="radio" name="q${i}" value="${idx}"><span>${o}</span></label>`).join('') + `</div><div class="feedback" id="feedback-${i}">Correct: ${d.a[d.c]}</div>`;
-        area.appendChild(div);
-    });
+        document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+        document.getElementById(`step-${step}`).classList.add('active');
+        currentStep = step;
+        
+        const progress = (step / 7) * 100;
+        document.getElementById('progress').style.width = `${progress}%`;
+        window.scrollTo(0, 0);
+    }
 
-    function processResult() {
-        const name = document.getElementById('studentName').value;
-        if(!name || name.length < 3) { alert("Por favor, digite seu nome completo."); window.scrollTo(0,0); return; }
-
-        let s = 0;
-        quizData.forEach((d, i) => {
-            const r = document.querySelector(`input[name="q${i}"]:checked`);
-            document.getElementById(`feedback-${i}`).style.display = "block";
-            if(r) {
-                const val = parseInt(r.value);
-                if(val === d.c) { s++; document.getElementById(`label-${i}-${val}`).classList.add('correct'); }
-                else { document.getElementById(`label-${i}-${val}`).classList.add('incorrect'); document.getElementById(`label-${i}-${d.c}`).classList.add('correct'); }
-            } else { document.getElementById(`label-${i}-${d.c}`).classList.add('correct'); }
+    function calculateResult() {
+        let score = 0;
+        let reviewHtml = "";
+        questions.forEach((q, i) => {
+            const isCorrect = studentAnswers[i] === q.c;
+            if(isCorrect) score++;
+            
+            reviewHtml += `
+                <div class="question-item ${isCorrect ? 'correct' : 'incorrect'}">
+                    <span class="question-text">${q.q}</span>
+                    <p>Sua resposta: <strong>${studentAnswers[i] !== undefined ? q.a[studentAnswers[i]] : "Não respondida"}</strong></p>
+                    <p>Correta: <strong>${q.a[q.c]}</strong></p>
+                </div>
+            `;
         });
 
-        document.getElementById('quizForm').style.pointerEvents = "none";
-        document.getElementById('intro').style.display = 'none';
-        document.getElementById('result-screen').style.display = 'block';
-        document.getElementById('display-name').innerText = name;
-        document.getElementById('final-score').innerText = `${s}/60`;
+        const name = document.getElementById('studentName').value;
+        document.getElementById('res-name').innerText = name;
+        document.getElementById('res-score').innerText = `${score}/60`;
+        
+        let lvl = ""; let dsc = "";
+        if(score <= 20) { lvl = "Iniciante (A1)"; dsc = "Você está começando sua jornada! A Black White School tem o curso ideal para sua base."; }
+        else if(score <= 40) { lvl = "Intermediário (B1/B2)"; dsc = "Você já se comunica! Vamos trabalhar sua fluência e confiança."; }
+        else { lvl = "Avançado (C1)"; dsc = "Domínio excepcional! Vamos polir os detalhes para a perfeição."; }
 
-        let level = ""; let dsc = "";
-        if(s <= 15) { level = "A1 - Beginner"; dsc = "Você está iniciando seus estudos. Recomendamos turmas de nível Starter."; }
-        else if(s <= 30) { level = "A2 - Elementary"; dsc = "Você já possui uma base. Recomendamos turmas de nível Elementary."; }
-        else if(s <= 45) { level = "B1/B2 - Intermediate"; dsc = "Seu inglês é funcional. Recomendamos turmas de nível Intermediate/Upper."; }
-        else { level = "C1 - Advanced"; dsc = "Você possui alto domínio. Recomendamos turmas de nível Advanced."; }
+        document.getElementById('res-level').innerText = lvl;
+        document.getElementById('res-desc').innerText = dsc;
+        document.getElementById('review-area').innerHTML = reviewHtml;
 
-        document.getElementById('level-name').innerText = level;
-        document.getElementById('level-desc').innerText = dsc;
+        const msg = encodeURIComponent(`Olá! Sou ${name} e finalizei meu Teste de Nivelamento.\nPontuação: ${score}/60\nNível: ${lvl}`);
+        document.getElementById('wa-link').href = `https://wa.me/5519991717549?text=${msg}`;
 
-        const msg = encodeURIComponent(`*NOVO TESTE DE NIVELAMENTO*\n\n*Nome:* ${name}\n*Acertos:* ${s}/60\n*Nível sugerido:* ${level}`);
-        document.getElementById('wa-btn').href = `https://wa.me/5519991717549?text=${msg}`;
-        document.getElementById('wa-btn').style.display = "block";
-        window.scrollTo(0,0);
+        nextStep('result');
     }
+
+    window.onload = generateQuiz;
 </script>
 </body>
 </html>
