@@ -9,71 +9,59 @@
         :root { --primary: #000; --accent: #d32f2f; --bg: #f8f9fa; --white: #fff; --correct: #e8f5e9; --incorrect: #ffebee; --correct-text: #2e7d32; --incorrect-text: #c62828; --info-blue: #e3f2fd; --info-text: #0d47a1; }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Open Sans', sans-serif; }
         body { background: var(--bg); color: #222; line-height: 1.6; }
-        
         .header-logos { background: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border-bottom: 3px solid var(--accent); }
         .header-logos img { height: 60px; width: auto; object-fit: contain; }
         .school-logo { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.2rem; color: #000; }
         .school-logo span { color: var(--accent); }
-
         .hero { background: var(--primary); color: var(--white); padding: 40px 20px; text-align: center; }
-        .timer-box { position: fixed; top: 120px; right: 20px; background: var(--accent); color: white; padding: 10px 20px; border-radius: 50px; font-weight: 700; z-index: 100; display: none; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        .timer-box { position: fixed; top: 120px; right: 20px; background: var(--accent); color: white; padding: 10px 20px; border-radius: 50px; font-weight: 700; z-index: 100; display: none; }
         .container { max-width: 850px; margin: -30px auto 60px; padding: 0 20px; }
         .card { background: var(--white); padding: 35px; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
-        
         .step { display: none; }
         .step.active { display: block; animation: fadeIn 0.4s; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        
         .field { width: 100%; padding: 15px; border: 2px solid #ddd; border-radius: 8px; font-size: 1rem; margin-bottom: 20px; }
         .question-item { margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid #eee; }
         .opt-label { padding: 12px; border: 2px solid #eee; border-radius: 8px; cursor: pointer; display: flex; align-items: center; margin-bottom: 8px; transition: 0.2s; }
         .opt-label:hover { border-color: var(--accent); background: #fffafa; }
         input[type="radio"] { margin-right: 12px; accent-color: var(--accent); }
-        
         .btn { padding: 18px; border-radius: 8px; border: none; font-weight: 700; cursor: pointer; width: 100%; font-size: 1rem; text-transform: uppercase; transition: 0.3s; }
-        .btn-primary { background: var(--accent); color: white; margin-bottom: 10px; }
+        .btn-primary { background: var(--accent); color: white; }
         .progress-bar { height: 6px; background: #eee; border-radius: 10px; margin-bottom: 20px; overflow: hidden; }
         .progress-fill { height: 100%; background: var(--accent); width: 0%; transition: 0.3s; }
-
-        .review-title { margin-top: 40px; border-top: 2px solid #eee; padding-top: 20px; font-family: 'Montserrat'; }
         .review-item { padding: 20px; border-radius: 8px; margin-bottom: 20px; text-align: left; border: 1px solid #ddd; }
         .review-correct { background-color: var(--correct); border-color: var(--correct-text); }
         .review-incorrect { background-color: var(--incorrect); border-color: var(--incorrect-text); }
-        .explanation { margin-top: 15px; padding: 10px; background: var(--info-blue); color: var(--info-text); border-radius: 5px; font-size: 0.9rem; font-style: italic; border-left: 4px solid var(--info-text); }
-        .ans-label { font-weight: 700; display: block; margin-top: 5px; }
-
-        @media (max-width: 600px) { .header-logos { flex-direction: column; gap: 15px; text-align: center; } }
+        .explanation { margin-top: 15px; padding: 10px; background: var(--info-blue); color: var(--info-text); border-radius: 5px; font-size: 0.9rem; border-left: 4px solid var(--info-text); }
     </style>
 </head>
 <body>
 
 <div class="timer-box" id="timerDisplay">60:00</div>
-
 <div class="header-logos">
     <div class="school-logo">BLACK <span>WHITE</span> SCHOOL</div>
-    <div style="display: flex; gap: 15px;"><img src="logos.png" alt="British Council & IELTS"></div>
+    <img src="logos.png" alt="IELTS Logos">
 </div>
 
-<div class="hero"><h1 style="font-family:'Montserrat'">IELTS Academic Placement</h1></div>
+<div class="hero"><h1>IELTS Academic Assessment</h1></div>
 
 <div class="container">
     <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
     <div class="card">
         <div class="step active" id="step-0">
-            <h2 style="margin-bottom:15px; font-family: 'Montserrat';">Candidate Registration</h2>
-            <input type="text" id="stuName" class="field" placeholder="Nome Completo">
-            <input type="tel" id="stuPhone" class="field" placeholder="WhatsApp (DDD + Número)">
-            <button class="btn btn-primary" onclick="startIELTS()">INICIAR TESTE OFICIAL</button>
+            <h2 style="margin-bottom:15px;">Candidate Registration</h2>
+            <input type="text" id="stuName" class="field" placeholder="Full Name">
+            <input type="tel" id="stuPhone" class="field" placeholder="WhatsApp">
+            <button class="btn btn-primary" onclick="startIELTS()">START TEST</button>
         </div>
         <div id="quiz-content"></div>
         <div class="step" id="step-result">
             <div style="text-align:center">
-                <h2 style="font-family: 'Montserrat';">Assessment Completed</h2>
-                <div style="font-size:4rem; font-weight:800; color:var(--accent); margin:15px 0;" id="band-score">0.0</div>
-                <h3 id="ielts-level" style="margin-bottom: 10px;">Calculando...</h3>
-                <a id="wa-link" class="btn btn-primary" style="background:#25D366; text-decoration:none; display:block;" target="_blank">ENVIAR NO WHATSAPP</a>
-                <h3 class="review-title">Detailed Review & Pedagogy</h3>
-                <div id="review-area"></div>
+                <h2>Your Band Score</h2>
+                <div style="font-size:4rem; font-weight:800; color:var(--accent);" id="band-score">0.0</div>
+                <h3 id="ielts-level"></h3>
+                <a id="wa-link" class="btn btn-primary" style="background:#25D366; text-decoration:none; display:block; margin-top:20px;" target="_blank">SEND TO TEACHER</a>
+                <div id="review-area" style="margin-top:40px;"></div>
             </div>
         </div>
     </div>
@@ -81,45 +69,58 @@
 
 <script>
     const questions = [
-        { q: "1. The report _______ that there is no immediate danger.", a: ["concluded", "concludes", "concluding", "is conclude"], c: 1, f: "Usamos o Present Simple para relatar fatos científicos ou descobertas em relatórios oficiais." },
-        { q: "2. Many believe _______ should be free for all.", a: ["education", "educate", "educating", "educational"], c: 0, f: "Aqui precisamos de um substantivo (noun) como sujeito da frase." },
-        { q: "3. If we _______ to the manager, we would have solved it.", a: ["speak", "spoke", "had spoken", "have spoken"], c: 2, f: "Third Conditional: Refere-se a uma situação hipotética no passado (If + Past Perfect)." },
-        { q: "4. Objective is to _______ the efficiency.", a: ["increase", "increasing", "increased", "increases"], c: 0, f: "Após o 'to' (infinitivo), o verbo deve permanecer em sua forma base." },
-        { q: "5. Rarely _______ such a sunset here.", a: ["one sees", "does one see", "one can see", "sees one"], c: 1, f: "Inversão Negativa: Advérbios de frequência negativa no início exigem estrutura de pergunta." },
-        { q: "6. Despite _______ setbacks, they continued.", a: ["have", "having", "had", "has"], c: 1, f: "A preposição 'Despite' deve ser seguida de um gerúndio (-ing) ou substantivo." },
-        { q: "7. Essential that the rules _______ followed.", a: ["is", "are", "be", "being"], c: 2, f: "Subjuntivo: Adjetivos de urgência/importância exigem o verbo na forma base (be)." },
-        { q: "8. The discovery was _______ important.", a: ["considered", "considering", "consider", "considers"], c: 0, f: "Voz Passiva: 'Be' + Past Participle para descrever como algo foi percebido." },
-        { q: "9. Look forward to _______ you.", a: ["see", "seeing", "saw", "seen"], c: 1, f: "A expressão 'Look forward to' é uma das poucas onde o 'to' é preposição, exigindo -ing." },
-        { q: "10. Technology progressed _______.", a: ["significant", "significantly", "significance", "signifying"], c: 1, f: "Precisamos de um advérbio para modificar o verbo 'progressed'." },
-        { q: "11. Scarcely _______ it started when it rained.", a: ["had", "did", "was", "has"], c: 0, f: "Semelhante à questão 5, 'Scarcely' exige inversão com Past Perfect." },
-        { q: "12. Data _______ that climate is changing.", a: ["suggests", "suggest", "suggesting", "is suggest"], c: 0, f: "Em contextos acadêmicos, 'Data' pode ser tratado como singular coletivo ou plural (suggests é o mais comum)." },
-        { q: "13. Difficult _______ you have qualifications.", a: ["unless", "if", "provided", "since"], c: 0, f: "'Unless' funciona como 'a menos que', indicando uma condição negativa." },
-        { q: "14. By then, they _______ left.", a: ["have", "had", "were", "are"], c: 1, f: "Past Perfect indica uma ação concluída antes de outro momento no passado." },
-        { q: "15. Known for _______ quality products.", a: ["produce", "producing", "production", "produced"], c: 1, f: "Preposições (for) são seguidas de gerúndio quando indicam a atividade de uma empresa." },
-        { q: "16. Thought _______ the richest man.", a: ["be", "to be", "being", "is"], c: 1, f: "Estrutura passiva de opinião: 'Is thought/said + to be'." },
-        { q: "17. Requires a _______ investment.", a: ["consider", "considerable", "considerably", "considering"], c: 1, f: "Precisamos de um adjetivo para qualificar o substantivo 'investment'." },
-        { q: "18. Not only _______, but he also forgot notes.", a: ["did he arrive", "he arrived", "arrived he", "he did arrive"], c: 0, f: "Inversão com 'Not only': exige auxiliar antes do sujeito." },
-        { q: "19. Rather you _______ mention it.", a: ["don't", "didn't", "not", "won't"], c: 1, f: "'Would rather' seguido de sujeito diferente exige o Past Simple para preferência presente." },
-        { q: "20. Results are _______ with hypothesis.", a: ["consistent", "consisting", "consistency", "consisted"], c: 0, f: "Colocação acadêmica: 'Consistent with' significa estar em harmonia com algo." },
-        // ... (Para brevidade, as demais 20 questões seguem o mesmo padrão técnico de feedback no sistema)
+        // 1-10: Grammar & Structure
+        { q: "1. The report _______ that there is no immediate danger.", a: ["concluded", "concludes", "concluding", "is conclude"], c: 1, f: "Usamos o Present Simple para relatar conclusões permanentes em textos acadêmicos." },
+        { q: "2. Many believe _______ should be free for all.", a: ["education", "educate", "educating", "educational"], c: 0, f: "O sujeito da frase deve ser um substantivo (noun)." },
+        { q: "3. If we _______ to the manager, we would have solved it.", a: ["speak", "spoke", "had spoken", "have spoken"], c: 2, f: "Third Conditional: Situação hipotética no passado exige Past Perfect." },
+        { q: "4. Objective is to _______ the efficiency.", a: ["increase", "increasing", "increased", "increases"], c: 0, f: "O infinitivo com 'to' exige a forma base do verbo." },
+        { q: "5. Rarely _______ such a sunset here.", a: ["one sees", "does one see", "one can see", "sees one"], c: 1, f: "Inversão com advérbios negativos (Rarely) exige auxiliar antes do sujeito." },
+        { q: "6. Despite _______ setbacks, they continued.", a: ["have", "having", "had", "has"], c: 1, f: "A preposição 'Despite' requer um gerúndio (-ing) ou substantivo." },
+        { q: "7. Essential that the rules _______ followed.", a: ["is", "are", "be", "being"], c: 2, f: "O modo subjuntivo é usado com adjetivos de importância/urgência." },
+        { q: "8. The discovery was _______ important.", a: ["considered", "considering", "consider", "considers"], c: 0, f: "Voz passiva requer o particípio passado (considered)." },
+        { q: "9. Look forward to _______ you.", a: ["see", "seeing", "saw", "seen"], c: 1, f: "Nesta expressão, 'to' é preposição e exige gerúndio." },
+        { q: "10. Technology progressed _______.", a: ["significant", "significantly", "significance", "signifying"], c: 1, f: "Advérbios (-ly) modificam verbos." },
+        // 11-20: Advanced Connectors
+        { q: "11. _______ the weather was bad, the flight was on time.", a: ["Despite", "Although", "However", "In spite"], c: 1, f: "'Although' introduz uma oração com sujeito e verbo." },
+        { q: "12. Not only _______ late, but he was also rude.", a: ["did he arrive", "he arrived", "he did arrive", "arrived he"], c: 0, f: "Inversão enfática com 'Not only'." },
+        { q: "13. I'd rather you _______ that.", a: ["don't", "didn't", "not", "won't"], c: 1, f: "'Would rather' com novo sujeito pede o Past Simple para o presente." },
+        { q: "14. By the time he arrives, we _______ the project.", a: ["finish", "will have finished", "finished", "have finished"], c: 1, f: "Future Perfect indica ação concluída antes de um ponto no futuro." },
+        { q: "15. I suggest _______ a specialist.", a: ["consult", "to consult", "consulting", "consults"], c: 2, f: "O verbo 'suggest' é seguido diretamente por gerúndio." },
+        { q: "16. No sooner _______ left than it rained.", a: ["he had", "had he", "did he", "he did"], c: 1, f: "Inversão temporal para eventos imediatos." },
+        { q: "17. It's time the government _______ action.", a: ["takes", "took", "take", "taken"], c: 1, f: "'It's time' exige o Past Simple para indicar urgência." },
+        { q: "18. Provided _______ you work hard, you'll pass.", a: ["that", "which", "what", "where"], c: 0, f: "'Provided that' é uma conjunção condicional." },
+        { q: "19. The person _______ I spoke to was helpful.", a: ["who", "whom", "which", "whose"], c: 1, f: "Usamos 'whom' como objeto de preposição em contextos formais." },
+        { q: "20. Scarcely _______ the door when the phone rang.", a: ["I opened", "had I opened", "did I open", "opened I"], c: 1, f: "Inversão com 'Scarcely' e Past Perfect." },
+        // 21-30: Academic Vocabulary
+        { q: "21. The results _______ the original theory.", a: ["contradict", "contradictory", "contradiction", "contradicting"], c: 0, f: "Verbo necessário para indicar oposição de dados." },
+        { q: "22. There is a _______ need for more research.", a: ["press", "pressing", "pressed", "presses"], c: 1, f: "'Pressing need' é uma colocation comum para necessidade urgente." },
+        { q: "23. The data _______ from various sources.", a: ["were gathered", "was gather", "gathering", "is gather"], c: 0, f: "'Data' é tecnicamente plural em escrita acadêmica rigorosa." },
+        { q: "24. A _______ amount of money was spent.", a: ["consider", "considerable", "considerably", "considering"], c: 1, f: "Adjetivo para quantificar (grande quantidade)." },
+        { q: "25. The study _______ on mental health.", a: ["focuses", "focusing", "focused", "is focus"], c: 0, f: "Concordância de terceira pessoa no presente." },
+        { q: "26. This method is _______ to the old one.", a: ["superior", "more superior", "superiority", "superly"], c: 0, f: "'Superior' já é comparativo e usa-se com 'to'." },
+        { q: "27. He has a vast _______ of knowledge.", a: ["accumulate", "accumulation", "accumulated", "accumulating"], c: 1, f: "Substantivo para indicar o conjunto acumulado." },
+        { q: "28. The policy was _______ effective.", a: ["high", "highly", "height", "higher"], c: 1, f: "Advérbio de intensidade para adjetivos." },
+        { q: "29. We must _______ certain standards.", a: ["uphold", "upheld", "upholding", "upholds"], c: 0, f: "Verbo modal 'must' exige forma base." },
+        { q: "30. The evidence is _______.", a: ["conclude", "conclusive", "conclusion", "concluding"], c: 1, f: "Adjetivo para evidência definitiva." },
+        // 31-40: Phrases & Idioms
+        { q: "31. In the _______ of time, we must act.", a: ["interest", "interesting", "interested", "interests"], c: 0, f: "'In the interest of' é uma expressão fixa (em favor de)." },
+        { q: "32. On _______ of the committee, I thank you.", a: ["behalf", "instead", "place", "part"], c: 0, f: "'On behalf of' significa 'em nome de'." },
+        { q: "33. With _______ to your letter, I'm writing...", a: ["regard", "regards", "regarding", "regarded"], c: 0, f: "'With regard to' é a forma padrão formal." },
+        { q: "34. It is _______ worth mentioning.", a: ["well", "good", "very", "much"], c: 0, f: "'Well worth' é a colocation correta para ênfase." },
+        { q: "35. Take into _______ the costs.", a: ["account", "mind", "fact", "view"], c: 0, f: "'Take into account' significa considerar." },
+        { q: "36. By and _______, the project was a success.", a: ["large", "big", "great", "huge"], c: 0, f: "'By and large' significa 'em geral'." },
+        { q: "37. He is _______ to win.", a: ["likely", "like", "liking", "likelihood"], c: 0, f: "'Likely' indica probabilidade." },
+        { q: "38. In _______ of the above, we recommend...", a: ["light", "dark", "view", "sight"], c: 0, f: "'In light of' significa 'considerando' ou 'devido a'." },
+        { q: "39. It's only a matter _______ time.", a: ["of", "in", "to", "by"], c: 0, f: "Expressão fixa para algo inevitável." },
+        { q: "40. Contrary _______ popular belief.", a: ["to", "from", "with", "than"], c: 0, f: "'Contrary' exige a preposição 'to'." }
     ];
-
-    // Duplicando lógica para garantir as 40 questões no loop de construção
-    for(let i=21; i<=40; i++) {
-        questions.push({
-            q: `${i}. Academic research _______ rigorous standards.`,
-            a: ["demand", "demands", "demanding", "is demand"],
-            c: 1,
-            f: "Concordância verbal em terceira pessoa no presente simples acadêmico."
-        });
-    }
 
     let userAnswers = {};
     let timeLeft = 3600;
     let timerId;
 
     function startIELTS() {
-        if(document.getElementById('stuName').value.length < 3) return alert("Insira seu nome.");
+        if(document.getElementById('stuName').value.length < 3) return alert("Please enter your name.");
         document.getElementById('timerDisplay').style.display = 'block';
         startTimer();
         showPage(1);
@@ -159,7 +160,7 @@
                 html += `</div>`;
             }
             let isLast = p === 4;
-            html += `<button class="btn btn-primary" onclick="${isLast ? 'finalize()' : 'showPage('+(p+2)+')'}">${isLast ? 'FINALIZAR' : 'PRÓXIMA'}</button>`;
+            html += `<button class="btn btn-primary" onclick="${isLast ? 'finalize()' : 'showPage('+(p+2)+')'}">${isLast ? 'FINISH' : 'NEXT'}</button>`;
             div.innerHTML = html;
             container.appendChild(div);
         }
@@ -169,32 +170,23 @@
         clearInterval(timerId);
         let score = 0;
         let reviewHtml = "";
-        
         questions.forEach((q, i) => {
             const isCorrect = userAnswers[i] === q.c;
             if(isCorrect) score++;
-            
-            reviewHtml += `
-                <div class="review-item ${isCorrect ? 'review-correct' : 'review-incorrect'}">
-                    <p><b>${q.q}</b></p>
-                    <span class="ans-label">Sua resposta: ${userAnswers[i] !== undefined ? q.a[userAnswers[i]] : "Não respondida"}</span>
-                    ${!isCorrect ? `<span class="ans-label">Resposta correta: ${q.a[q.c]}</span>` : ''}
-                    <div class="explanation"><b>Feedback Pedagógico:</b> ${q.f}</div>
-                </div>`;
+            reviewHtml += `<div class="review-item ${isCorrect ? 'review-correct' : 'review-incorrect'}">
+                <p><b>${q.q}</b></p>
+                <p>Your answer: ${userAnswers[i] !== undefined ? q.a[userAnswers[i]] : "No answer"}</p>
+                ${!isCorrect ? `<p>Correct answer: ${q.a[q.c]}</p>` : ''}
+                <div class="explanation"><b>Feedback:</b> ${q.f}</div>
+            </div>`;
         });
-
         let band = ((score / 40) * 9).toFixed(1);
-        let level = band >= 7.5 ? "C1/C2 - Advanced" : band >= 5.5 ? "B2 - Upper Intermediate" : "A1-B1 - Beginner/Intermediate";
-        
         document.getElementById('band-score').innerText = band;
-        document.getElementById('ielts-level').innerText = level;
         document.getElementById('review-area').innerHTML = reviewHtml;
-        
-        const text = encodeURIComponent(`*IELTS RESULT*\n*Nome:* ${document.getElementById('stuName').value}\n*Score:* ${band}\n*Nível:* ${level}\n*Acertos:* ${score}/40`);
+        const text = encodeURIComponent(`IELTS RESULT: ${document.getElementById('stuName').value}\nBand: ${band}\nCorrect: ${score}/40`);
         document.getElementById('wa-link').href = `https://wa.me/5519991717549?text=${text}`;
         showPage('result');
     }
-
     window.onload = build;
 </script>
 </body>
