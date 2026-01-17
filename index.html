@@ -3,191 +3,298 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IELTS Official 40 | Black White School</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>IELTS Placement Test | Black White School</title>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #000; --accent: #d32f2f; --bg: #f8f9fa; --white: #fff; --correct: #e8f5e9; --incorrect: #ffebee; --correct-text: #2e7d32; --incorrect-text: #c62828; --info-blue: #e3f2fd; --info-text: #0d47a1; }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Open Sans', sans-serif; }
-        body { background: var(--bg); color: #222; line-height: 1.6; }
-        .header-logos { background: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border-bottom: 3px solid var(--accent); }
-        .header-logos img { height: 60px; width: auto; object-fit: contain; }
-        .school-logo { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.2rem; color: #000; }
-        .school-logo span { color: var(--accent); }
-        .hero { background: var(--primary); color: var(--white); padding: 40px 20px; text-align: center; }
-        .timer-box { position: fixed; top: 120px; right: 20px; background: var(--accent); color: white; padding: 10px 20px; border-radius: 50px; font-weight: 700; z-index: 100; display: none; }
-        .container { max-width: 850px; margin: -30px auto 60px; padding: 0 20px; }
-        .card { background: var(--white); padding: 35px; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
+        :root {
+            --bg-color: #131314;
+            --card-bg: #1e1f20;
+            --text-main: #e3e3e3;
+            --text-secondary: #c4c7c5;
+            --accent: #a8c7fa;
+            --error: #f2b8b5;
+            --success: #c4eed0;
+            --border: #444746;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body { 
+            background-color: var(--bg-color); 
+            color: var(--text-main); 
+            font-family: 'Open Sans', sans-serif;
+            display: flex; flex-direction: column; align-items: center;
+            min-height: 100vh;
+        }
+
+        h1, h2, h3, .score-value { font-family: 'Google Sans', sans-serif; }
+
+        /* Header Estilo Gemini */
+        .header {
+            width: 100%; padding: 20px 5%;
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(19, 19, 20, 0.8); backdrop-filter: blur(10px);
+            position: sticky; top: 0; z-index: 100;
+        }
+
+        .school-logo { font-size: 1.4rem; font-weight: 700; color: #fff; }
+        .school-logo span { color: #d32f2f; }
+        .header img { height: 45px; filter: brightness(0) invert(1); opacity: 0.8; }
+
+        .container { width: 100%; max-width: 900px; padding: 20px; margin-top: 20px; }
+
+        /* Card Estilo Gemini */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 24px;
+            padding: 32px;
+            margin-bottom: 24px;
+            border: 1px solid var(--border);
+        }
+
         .step { display: none; }
-        .step.active { display: block; animation: fadeIn 0.4s; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .field { width: 100%; padding: 15px; border: 2px solid #ddd; border-radius: 8px; font-size: 1rem; margin-bottom: 20px; }
-        .question-item { margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid #eee; }
-        .opt-label { padding: 12px; border: 2px solid #eee; border-radius: 8px; cursor: pointer; display: flex; align-items: center; margin-bottom: 8px; transition: 0.2s; }
-        .opt-label:hover { border-color: var(--accent); background: #fffafa; }
-        input[type="radio"] { margin-right: 12px; accent-color: var(--accent); }
-        .btn { padding: 18px; border-radius: 8px; border: none; font-weight: 700; cursor: pointer; width: 100%; font-size: 1rem; text-transform: uppercase; transition: 0.3s; }
-        .btn-primary { background: var(--accent); color: white; }
-        .progress-bar { height: 6px; background: #eee; border-radius: 10px; margin-bottom: 20px; overflow: hidden; }
-        .progress-fill { height: 100%; background: var(--accent); width: 0%; transition: 0.3s; }
-        .review-item { padding: 20px; border-radius: 8px; margin-bottom: 20px; text-align: left; border: 1px solid #ddd; }
-        .review-correct { background-color: var(--correct); border-color: var(--correct-text); }
-        .review-incorrect { background-color: var(--incorrect); border-color: var(--incorrect-text); }
-        .explanation { margin-top: 15px; padding: 10px; background: var(--info-blue); color: var(--info-text); border-radius: 5px; font-size: 0.9rem; border-left: 4px solid var(--info-text); }
+        .step.active { display: block; animation: fadeIn 0.5s ease; }
+
+        /* Question Style */
+        .question-text { font-size: 1.2rem; margin-bottom: 20px; color: var(--text-main); }
+        .opt-label {
+            display: flex; align-items: center;
+            padding: 16px; margin-bottom: 12px;
+            background: #2b2c2f; border: 1px solid var(--border);
+            border-radius: 16px; cursor: pointer; transition: 0.2s;
+        }
+        .opt-label:hover { background: #37393b; border-color: var(--accent); }
+        input[type="radio"] { margin-right: 15px; transform: scale(1.2); accent-color: var(--accent); }
+
+        /* Buttons */
+        .btn {
+            background-color: var(--accent); color: #062e6f;
+            padding: 14px 28px; border-radius: 100px;
+            border: none; font-weight: 600; cursor: pointer;
+            font-size: 1rem; transition: 0.3s;
+        }
+        .btn:hover { opacity: 0.9; transform: translateY(-1px); }
+
+        /* Stats Grid (Visual do Print) */
+        .stats-grid {
+            display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 24px;
+        }
+        .stat-box {
+            background: #2b2c2f; padding: 20px; border-radius: 20px; text-align: left;
+        }
+        .stat-label { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 8px; }
+        .stat-value { font-size: 2rem; font-weight: 700; color: var(--text-main); }
+        .mini-stats { display: flex; flex-direction: column; gap: 8px; }
+        .mini-item { display: flex; justify-content: space-between; color: var(--text-secondary); }
+
+        /* Review Items */
+        .review-item {
+            background: #1e1f20; border-radius: 20px; padding: 20px;
+            margin-bottom: 16px; border-left: 5px solid var(--border);
+        }
+        .review-correct { border-left-color: #4caf50; }
+        .review-incorrect { border-left-color: #f44336; }
+        .explanation { 
+            margin-top: 10px; padding: 12px; background: rgba(168, 199, 250, 0.1); 
+            border-radius: 12px; font-size: 0.9rem; color: var(--accent);
+        }
+
+        input.field {
+            width: 100%; background: #2b2c2f; border: 1px solid var(--border);
+            padding: 16px; border-radius: 16px; color: #fff; margin-bottom: 20px;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-<div class="timer-box" id="timerDisplay">60:00</div>
-<div class="header-logos">
+<div class="header">
     <div class="school-logo">BLACK <span>WHITE</span> SCHOOL</div>
-    <img src="logos.png" alt="IELTS Logos">
+    <img src="logos.png" alt="IELTS Partners">
 </div>
 
-<div class="hero"><h1>IELTS Academic Assessment</h1></div>
-
 <div class="container">
-    <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
     <div class="card">
         <div class="step active" id="step-0">
-            <h2 style="margin-bottom:15px;">Candidate Registration</h2>
-            <input type="text" id="stuName" class="field" placeholder="Full Name">
-            <input type="tel" id="stuPhone" class="field" placeholder="WhatsApp">
-            <button class="btn btn-primary" onclick="startIELTS()">START TEST</button>
+            <h2 style="margin-bottom:24px">Placement Test Registration</h2>
+            <input type="text" id="stuName" class="field" placeholder="Seu nome completo">
+            <input type="tel" id="stuPhone" class="field" placeholder="Seu WhatsApp">
+            <button class="btn" onclick="startTest()">Iniciar Avaliação</button>
         </div>
+
         <div id="quiz-content"></div>
+
         <div class="step" id="step-result">
-            <div style="text-align:center">
-                <h2>Your Band Score</h2>
-                <div style="font-size:4rem; font-weight:800; color:var(--accent);" id="band-score">0.0</div>
-                <h3 id="ielts-level"></h3>
-                <a id="wa-link" class="btn btn-primary" style="background:#25D366; text-decoration:none; display:block; margin-top:20px;" target="_blank">SEND TO TEACHER</a>
-                <div id="review-area" style="margin-top:40px;"></div>
+            <h2 style="margin-bottom:24px">You did it! Quiz complete.</h2>
+            
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-label">IELTS Band Score</div>
+                    <div class="stat-value" id="res-band">0.0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Accuracy</div>
+                    <div class="stat-value" id="res-accuracy">0%</div>
+                </div>
+                <div class="stat-box">
+                    <div class="mini-stats">
+                        <div class="mini-item"><span>Right</span> <strong id="res-right" style="color:#c4eed0">0</strong></div>
+                        <div class="mini-item"><span>Wrong</span> <strong id="res-wrong" style="color:#f2b8b5">0</strong></div>
+                        <div class="mini-item"><span>Skipped</span> <strong id="res-skipped">0</strong></div>
+                    </div>
+                </div>
             </div>
+
+            <button class="btn" id="wa-btn" style="width:100%; margin-bottom:30px">Enviar Resultado para o Professor</button>
+            
+            <h3 style="margin-bottom:20px">Review your answers</h3>
+            <div id="review-area"></div>
         </div>
     </div>
 </div>
 
 <script>
     const questions = [
-        // 1-10: Grammar & Structure
-        { q: "1. The report _______ that there is no immediate danger.", a: ["concluded", "concludes", "concluding", "is conclude"], c: 1, f: "Usamos o Present Simple para relatar conclusões permanentes em textos acadêmicos." },
-        { q: "2. Many believe _______ should be free for all.", a: ["education", "educate", "educating", "educational"], c: 0, f: "O sujeito da frase deve ser um substantivo (noun)." },
-        { q: "3. If we _______ to the manager, we would have solved it.", a: ["speak", "spoke", "had spoken", "have spoken"], c: 2, f: "Third Conditional: Situação hipotética no passado exige Past Perfect." },
-        { q: "4. Objective is to _______ the efficiency.", a: ["increase", "increasing", "increased", "increases"], c: 0, f: "O infinitivo com 'to' exige a forma base do verbo." },
-        { q: "5. Rarely _______ such a sunset here.", a: ["one sees", "does one see", "one can see", "sees one"], c: 1, f: "Inversão com advérbios negativos (Rarely) exige auxiliar antes do sujeito." },
-        { q: "6. Despite _______ setbacks, they continued.", a: ["have", "having", "had", "has"], c: 1, f: "A preposição 'Despite' requer um gerúndio (-ing) ou substantivo." },
-        { q: "7. Essential that the rules _______ followed.", a: ["is", "are", "be", "being"], c: 2, f: "O modo subjuntivo é usado com adjetivos de importância/urgência." },
-        { q: "8. The discovery was _______ important.", a: ["considered", "considering", "consider", "considers"], c: 0, f: "Voz passiva requer o particípio passado (considered)." },
-        { q: "9. Look forward to _______ you.", a: ["see", "seeing", "saw", "seen"], c: 1, f: "Nesta expressão, 'to' é preposição e exige gerúndio." },
-        { q: "10. Technology progressed _______.", a: ["significant", "significantly", "significance", "signifying"], c: 1, f: "Advérbios (-ly) modificam verbos." },
-        // 11-20: Advanced Connectors
-        { q: "11. _______ the weather was bad, the flight was on time.", a: ["Despite", "Although", "However", "In spite"], c: 1, f: "'Although' introduz uma oração com sujeito e verbo." },
-        { q: "12. Not only _______ late, but he was also rude.", a: ["did he arrive", "he arrived", "he did arrive", "arrived he"], c: 0, f: "Inversão enfática com 'Not only'." },
-        { q: "13. I'd rather you _______ that.", a: ["don't", "didn't", "not", "won't"], c: 1, f: "'Would rather' com novo sujeito pede o Past Simple para o presente." },
-        { q: "14. By the time he arrives, we _______ the project.", a: ["finish", "will have finished", "finished", "have finished"], c: 1, f: "Future Perfect indica ação concluída antes de um ponto no futuro." },
-        { q: "15. I suggest _______ a specialist.", a: ["consult", "to consult", "consulting", "consults"], c: 2, f: "O verbo 'suggest' é seguido diretamente por gerúndio." },
-        { q: "16. No sooner _______ left than it rained.", a: ["he had", "had he", "did he", "he did"], c: 1, f: "Inversão temporal para eventos imediatos." },
-        { q: "17. It's time the government _______ action.", a: ["takes", "took", "take", "taken"], c: 1, f: "'It's time' exige o Past Simple para indicar urgência." },
-        { q: "18. Provided _______ you work hard, you'll pass.", a: ["that", "which", "what", "where"], c: 0, f: "'Provided that' é uma conjunção condicional." },
-        { q: "19. The person _______ I spoke to was helpful.", a: ["who", "whom", "which", "whose"], c: 1, f: "Usamos 'whom' como objeto de preposição em contextos formais." },
-        { q: "20. Scarcely _______ the door when the phone rang.", a: ["I opened", "had I opened", "did I open", "opened I"], c: 1, f: "Inversão com 'Scarcely' e Past Perfect." },
-        // 21-30: Academic Vocabulary
-        { q: "21. The results _______ the original theory.", a: ["contradict", "contradictory", "contradiction", "contradicting"], c: 0, f: "Verbo necessário para indicar oposição de dados." },
-        { q: "22. There is a _______ need for more research.", a: ["press", "pressing", "pressed", "presses"], c: 1, f: "'Pressing need' é uma colocation comum para necessidade urgente." },
-        { q: "23. The data _______ from various sources.", a: ["were gathered", "was gather", "gathering", "is gather"], c: 0, f: "'Data' é tecnicamente plural em escrita acadêmica rigorosa." },
-        { q: "24. A _______ amount of money was spent.", a: ["consider", "considerable", "considerably", "considering"], c: 1, f: "Adjetivo para quantificar (grande quantidade)." },
-        { q: "25. The study _______ on mental health.", a: ["focuses", "focusing", "focused", "is focus"], c: 0, f: "Concordância de terceira pessoa no presente." },
-        { q: "26. This method is _______ to the old one.", a: ["superior", "more superior", "superiority", "superly"], c: 0, f: "'Superior' já é comparativo e usa-se com 'to'." },
-        { q: "27. He has a vast _______ of knowledge.", a: ["accumulate", "accumulation", "accumulated", "accumulating"], c: 1, f: "Substantivo para indicar o conjunto acumulado." },
-        { q: "28. The policy was _______ effective.", a: ["high", "highly", "height", "higher"], c: 1, f: "Advérbio de intensidade para adjetivos." },
-        { q: "29. We must _______ certain standards.", a: ["uphold", "upheld", "upholding", "upholds"], c: 0, f: "Verbo modal 'must' exige forma base." },
-        { q: "30. The evidence is _______.", a: ["conclude", "conclusive", "conclusion", "concluding"], c: 1, f: "Adjetivo para evidência definitiva." },
-        // 31-40: Phrases & Idioms
-        { q: "31. In the _______ of time, we must act.", a: ["interest", "interesting", "interested", "interests"], c: 0, f: "'In the interest of' é uma expressão fixa (em favor de)." },
-        { q: "32. On _______ of the committee, I thank you.", a: ["behalf", "instead", "place", "part"], c: 0, f: "'On behalf of' significa 'em nome de'." },
-        { q: "33. With _______ to your letter, I'm writing...", a: ["regard", "regards", "regarding", "regarded"], c: 0, f: "'With regard to' é a forma padrão formal." },
-        { q: "34. It is _______ worth mentioning.", a: ["well", "good", "very", "much"], c: 0, f: "'Well worth' é a colocation correta para ênfase." },
-        { q: "35. Take into _______ the costs.", a: ["account", "mind", "fact", "view"], c: 0, f: "'Take into account' significa considerar." },
-        { q: "36. By and _______, the project was a success.", a: ["large", "big", "great", "huge"], c: 0, f: "'By and large' significa 'em geral'." },
-        { q: "37. He is _______ to win.", a: ["likely", "like", "liking", "likelihood"], c: 0, f: "'Likely' indica probabilidade." },
-        { q: "38. In _______ of the above, we recommend...", a: ["light", "dark", "view", "sight"], c: 0, f: "'In light of' significa 'considerando' ou 'devido a'." },
-        { q: "39. It's only a matter _______ time.", a: ["of", "in", "to", "by"], c: 0, f: "Expressão fixa para algo inevitável." },
-        { q: "40. Contrary _______ popular belief.", a: ["to", "from", "with", "than"], c: 0, f: "'Contrary' exige a preposição 'to'." }
+        // FUNDAMENTOS (1-10)
+        { q: "Choose the correct preposition: The keys are _______ the table.", a: ["on", "in", "at", "under"], c: 0, f: "Usamos 'on' para superfícies." },
+        { q: "Which article is correct? I want to eat _______ apple.", a: ["a", "an", "the", "some"], c: 1, f: "Usamos 'an' antes de sons de vogais." },
+        { q: "_______ is your teacher?", a: ["What", "Where", "Who", "Whose"], c: 2, f: "Usamos 'Who' para pessoas." },
+        { q: "They _______ at the party last night.", a: ["was", "were", "is", "are"], c: 1, f: "Passado de 'To Be' para plural (They) é 'were'." },
+        { q: "I don't have _______ water in my bottle.", a: ["many", "much", "a lot of", "very"], c: 1, f: "Usamos 'much' para substantivos incontáveis em negativas." },
+        { q: "What color is a banana?", a: ["Red", "Green", "Blue", "Yellow"], c: 3, f: "Vocabulário básico: Yellow (Amarelo)." },
+        { q: "Choose the negative: She _______ like pizza.", a: ["don't", "doesn't", "isn't", "not"], c: 1, f: "Auxiliar negativo para 3ª pessoa (She) é 'doesn't'." },
+        { q: "I am staying home _______ it is raining.", a: ["but", "so", "because", "and"], c: 2, f: "Usamos 'because' para explicar a causa/razão." },
+        { q: "_______ car is this?", a: ["Who", "Whose", "Who's", "Which"], c: 1, f: "Usamos 'Whose' para perguntar sobre posse (de quem)." },
+        { q: "Yesterday was Monday. Today is _______.", a: ["Sunday", "Tuesday", "Wednesday", "Friday"], c: 1, f: "Dias da semana: Tuesday (Terça) vem após Monday." },
+        
+        // INTERMEDIÁRIO (11-25)
+        { q: "I have been living here _______ 2010.", a: ["for", "since", "during", "at"], c: 1, f: "Usamos 'since' para um ponto específico no tempo." },
+        { q: "If it rains, I _______ stay at home.", a: ["would", "will", "did", "am"], c: 1, f: "First Conditional: Futuro real com 'will'." },
+        { q: "He is _______ than his brother.", a: ["tall", "taller", "tallest", "more tall"], c: 1, f: "Comparativo de adjetivos curtos recebe '-er'." },
+        { q: "I _______ my homework already.", a: ["finish", "have finished", "finishing", "was finish"], c: 1, f: "Present Perfect para ações concluídas com impacto no presente." },
+        { q: "The movie was _______.", a: ["bored", "boring", "bore", "bores"], c: 1, f: "Usamos '-ing' para descrever a característica de algo." },
+        { q: "_______ you ever been to London?", a: ["Do", "Did", "Have", "Were"], c: 2, f: "Pergunta de experiência de vida usa Present Perfect (Have)." },
+        { q: "This is the _______ book I've ever read.", a: ["good", "better", "best", "goodest"], c: 2, f: "Superlativo irregular de 'good' é 'best'." },
+        { q: "He drives _______.", a: ["careful", "carefully", "carefulness", "more careful"], c: 1, f: "Usamos advérbios (-ly) para descrever como uma ação é feita." },
+        { q: "I enjoy _______ music.", a: ["listen", "to listen", "listening", "listened"], c: 2, f: "O verbo 'enjoy' exige o gerúndio (-ing) no verbo seguinte." },
+        { q: "We _______ watch TV when the power went out.", a: ["are", "were", "was", "been"], c: 1, f: "Past Continuous: Ação em curso no passado." },
+        { q: "There are _______ students in the class.", a: ["much", "any", "a few", "a little"], c: 2, f: "Usamos 'a few' para contáveis (estudantes)." },
+        { q: "I _______ go to the gym tomorrow, but I'm not sure.", a: ["must", "might", "should", "will"], c: 1, f: "Usamos 'might' para possibilidade incerta." },
+        { q: "The letter _______ by Mary yesterday.", a: ["wrote", "was written", "is writing", "write"], c: 1, f: "Voz Passiva: Objeto + was/were + particípio." },
+        { q: "She _______ her keys again. She's so forgetful!", a: ["lost", "has lost", "is losing", "was lost"], c: 1, f: "Present Perfect para algo que acabou de acontecer." },
+        { q: "You _______ smoke here. It's prohibited.", a: ["don't have to", "mustn't", "couldn't", "won't"], c: 1, f: "'Mustn't' indica proibição severa." },
+
+        // ACADÊMICO/AVANÇADO (26-40)
+        { q: "Rarely _______ such a beautiful performance.", a: ["we see", "do we see", "we saw", "we have seen"], c: 1, f: "Inversão negativa com advérbios de frequência." },
+        { q: "The report _______ that climate change is accelerating.", a: ["concluded", "concludes", "concluding", "is conclude"], c: 1, f: "Present Simple para relatar fatos científicos." },
+        { q: "Despite _______ hard, he failed the exam.", a: ["study", "studying", "studied", "he studied"], c: 1, f: "'Despite' exige gerúndio ou substantivo." },
+        { q: "I look forward to _______ you next week.", a: ["meet", "meeting", "met", "to meet"], c: 1, f: "A preposição 'to' nesta expressão exige gerúndio." },
+        { q: "It's essential that he _______ on time.", a: ["is", "be", "was", "been"], c: 1, f: "Subjuntivo acadêmico exige a forma base (be)." },
+        { q: "By next year, I _______ my degree.", a: ["finish", "will have finished", "have finished", "will finish"], c: 1, f: "Future Perfect para conclusão antes de um ponto futuro." },
+        { q: "The data _______ carefully analyzed.", a: ["was", "were", "is", "being"], c: 1, f: "Em escrita acadêmica, 'Data' é tratado como plural." },
+        { q: "Had I known, I _______ differently.", a: ["acted", "would act", "would have acted", "will act"], c: 2, f: "Third Conditional invertido (Hipotético passado)." },
+        { q: "The discovery was _______ important.", a: ["considerable", "considerably", "consider", "considering"], c: 1, f: "Advérbio modificando o adjetivo 'important'." },
+        { q: "Not only _______ late, but he also forgot the files.", a: ["he arrived", "did he arrive", "arrived he", "he did arrive"], c: 1, f: "Inversão com 'Not only'." },
+        { q: "The company is known for _______ innovation.", a: ["produce", "producing", "production", "produced"], c: 1, f: "Gerúndio após preposição 'for'." },
+        { q: "Under no circumstances _______ the alarm.", a: ["you should touch", "should you touch", "you touch", "touch you"], c: 1, f: "Inversão formal negativa." },
+        { q: "The criteria _______ strictly applied.", a: ["was", "were", "is", "has been"], c: 1, f: "'Criteria' é o plural de 'criterion'." },
+        { q: "He suggested _______ a different approach.", a: ["take", "to take", "taking", "takes"], c: 2, f: "Verbo 'suggest' pede gerúndio." },
+        { q: "I'd rather you _______ tell anyone.", a: ["don't", "didn't", "won't", "not"], c: 1, f: "'Would rather' com novo sujeito pede Past Simple." }
     ];
 
     let userAnswers = {};
-    let timeLeft = 3600;
-    let timerId;
 
-    function startIELTS() {
-        if(document.getElementById('stuName').value.length < 3) return alert("Please enter your name.");
-        document.getElementById('timerDisplay').style.display = 'block';
-        startTimer();
+    function startTest() {
+        const name = document.getElementById('stuName').value;
+        if(name.length < 3) return alert("Por favor, digite seu nome.");
         showPage(1);
-    }
-
-    function startTimer() {
-        timerId = setInterval(() => {
-            timeLeft--;
-            let mins = Math.floor(timeLeft / 60);
-            let secs = timeLeft % 60;
-            document.getElementById('timerDisplay').innerText = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
-            if(timeLeft <= 0) finalize();
-        }, 1000);
     }
 
     function showPage(p) {
         document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
         const target = document.getElementById('step-' + p);
         if(target) target.classList.add('active');
-        document.getElementById('progress').style.width = (p/6 * 100) + '%';
         window.scrollTo(0,0);
     }
 
-    function build() {
+    function buildQuiz() {
         const container = document.getElementById('quiz-content');
-        for(let p=0; p<5; p++) {
+        const questionsPerPage = 8;
+        const totalPages = 5;
+
+        for(let p=0; p < totalPages; p++) {
             const div = document.createElement('div');
             div.className = 'step';
             div.id = 'step-' + (p+1);
-            let html = `<h3>Part ${p+1} / 5</h3><br>`;
-            for(let i=0; i<8; i++) {
-                let idx = (p*8)+i;
-                html += `<div class="question-item"><p><b>${questions[idx].q}</b></p>`;
-                questions[idx].a.forEach((opt, oI) => {
-                    html += `<label class="opt-label"><input type="radio" name="q${idx}" onclick="userAnswers[${idx}]=${oI}"> ${opt}</label>`;
-                });
-                html += `</div>`;
+            
+            let html = `<h2 style="margin-bottom:30px">Página ${p+1} de 5</h2>`;
+            for(let i=0; i < questionsPerPage; i++) {
+                let idx = (p * questionsPerPage) + i;
+                html += `
+                    <div class="question-item" style="margin-bottom:40px">
+                        <p class="question-text"><strong>${idx + 1}.</strong> ${questions[idx].q}</p>
+                        ${questions[idx].a.map((opt, oI) => `
+                            <label class="opt-label">
+                                <input type="radio" name="q${idx}" onclick="userAnswers[${idx}]=${oI}"> ${opt}
+                            </label>
+                        `).join('')}
+                    </div>`;
             }
-            let isLast = p === 4;
-            html += `<button class="btn btn-primary" onclick="${isLast ? 'finalize()' : 'showPage('+(p+2)+')'}">${isLast ? 'FINISH' : 'NEXT'}</button>`;
+
+            const isLast = (p === totalPages - 1);
+            html += `<button class="btn" onclick="${isLast ? 'finalize()' : `showPage(${p+2})`}">${isLast ? 'Finalizar Teste' : 'Próxima Página'}</button>`;
             div.innerHTML = html;
             container.appendChild(div);
         }
     }
 
     function finalize() {
-        clearInterval(timerId);
-        let score = 0;
+        let right = 0, wrong = 0, skipped = 0;
         let reviewHtml = "";
+
         questions.forEach((q, i) => {
-            const isCorrect = userAnswers[i] === q.c;
-            if(isCorrect) score++;
-            reviewHtml += `<div class="review-item ${isCorrect ? 'review-correct' : 'review-incorrect'}">
-                <p><b>${q.q}</b></p>
-                <p>Your answer: ${userAnswers[i] !== undefined ? q.a[userAnswers[i]] : "No answer"}</p>
-                ${!isCorrect ? `<p>Correct answer: ${q.a[q.c]}</p>` : ''}
-                <div class="explanation"><b>Feedback:</b> ${q.f}</div>
-            </div>`;
+            if(userAnswers[i] === undefined) {
+                skipped++;
+                reviewHtml += createReviewItem(q, i, "Skipped", false);
+            } else if(userAnswers[i] === q.c) {
+                right++;
+                reviewHtml += createReviewItem(q, i, q.a[userAnswers[i]], true);
+            } else {
+                wrong++;
+                reviewHtml += createReviewItem(q, i, q.a[userAnswers[i]], false);
+            }
         });
-        let band = ((score / 40) * 9).toFixed(1);
-        document.getElementById('band-score').innerText = band;
+
+        const band = ((right / 40) * 9).toFixed(1);
+        const accuracy = Math.round((right / 40) * 100);
+
+        document.getElementById('res-band').innerText = band;
+        document.getElementById('res-accuracy').innerText = accuracy + "%";
+        document.getElementById('res-right').innerText = right;
+        document.getElementById('res-wrong').innerText = wrong;
+        document.getElementById('res-skipped').innerText = skipped;
         document.getElementById('review-area').innerHTML = reviewHtml;
-        const text = encodeURIComponent(`IELTS RESULT: ${document.getElementById('stuName').value}\nBand: ${band}\nCorrect: ${score}/40`);
-        document.getElementById('wa-link').href = `https://wa.me/5519991717549?text=${text}`;
+
+        document.getElementById('wa-btn').onclick = () => {
+            const msg = encodeURIComponent(`*IELTS RESULT*\nCandidato: ${document.getElementById('stuName').value}\nScore: ${band}\nAcertos: ${right}/40\nAccuracy: ${accuracy}%`);
+            window.open(`https://wa.me/5519991717549?text=${msg}`);
+        };
+
         showPage('result');
     }
-    window.onload = build;
+
+    function createReviewItem(q, i, userAns, isCorrect) {
+        return `
+            <div class="review-item ${isCorrect ? 'review-correct' : 'review-incorrect'}">
+                <p style="margin-bottom:8px"><strong>${i+1}.</strong> ${q.q}</p>
+                <p style="font-size:0.9rem; color:var(--text-secondary)">Sua resposta: ${userAns}</p>
+                ${!isCorrect ? `<p style="font-size:0.9rem; color:var(--accent)">Correta: ${q.a[q.c]}</p>` : ''}
+                <div class="explanation"><strong>Feedback:</strong> ${q.f}</div>
+            </div>`;
+    }
+
+    window.onload = buildQuiz;
 </script>
 </body>
 </html>
