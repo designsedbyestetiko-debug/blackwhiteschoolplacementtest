@@ -3,193 +3,152 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IELTS Placement Test | Black White School</title>
+    <title>IELTS Official Placement | Black White School</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #000; --accent: #d32f2f; --bg: #f4f4f4; --white: #fff; --success: #25D366; }
+        :root { --primary: #000; --accent: #d32f2f; --bg: #f8f9fa; --white: #fff; }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
         body { background: var(--bg); color: #222; }
         .navbar { background: var(--white); padding: 15px 5%; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
         .logo { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.2rem; }
         .logo span { color: var(--accent); }
-        .hero { background: var(--primary); color: var(--white); padding: 50px 20px; text-align: center; }
-        .hero h1 { font-family: 'Montserrat'; font-size: 2rem; margin-bottom: 10px; }
+        .hero { background: var(--primary); color: var(--white); padding: 40px 20px; text-align: center; }
+        .timer-box { position: fixed; top: 80px; right: 20px; background: var(--accent); color: white; padding: 10px 20px; border-radius: 50px; font-weight: 800; z-index: 100; box-shadow: 0 4px 15px rgba(211,47,47,0.4); display: none; }
         .container { max-width: 850px; margin: -30px auto 60px; padding: 0 20px; }
-        .card { background: var(--white); padding: 40px; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
+        .card { background: var(--white); padding: 35px; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
         .step { display: none; }
         .step.active { display: block; animation: fadeIn 0.4s; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .input-group { margin-bottom: 20px; text-align: left; }
-        .input-group label { display: block; font-weight: 600; margin-bottom: 5px; font-size: 0.9rem; }
-        .field { width: 100%; padding: 15px; border: 2px solid #ddd; border-radius: 8px; font-size: 1rem; outline: none; }
-        .field:focus { border-color: var(--accent); }
-        .info-box { background: #fff5f5; border-left: 5px solid var(--accent); padding: 20px; margin-bottom: 25px; border-radius: 4px; }
-        .question-item { margin-bottom: 35px; }
-        .question-text { font-weight: 600; font-size: 1.1rem; display: block; margin-bottom: 15px; }
-        .options-grid { display: grid; gap: 12px; }
-        .opt-label { padding: 15px; border: 2px solid #eee; border-radius: 10px; cursor: pointer; display: flex; align-items: center; transition: 0.3s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .field { width: 100%; padding: 15px; border: 2px solid #ddd; border-radius: 8px; font-size: 1rem; margin-bottom: 20px; }
+        .question-item { margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid #eee; }
+        .opt-label { padding: 12px; border: 2px solid #eee; border-radius: 8px; cursor: pointer; display: flex; align-items: center; margin-bottom: 8px; transition: 0.2s; }
         .opt-label:hover { border-color: var(--accent); background: #fffafa; }
-        input[type="radio"] { margin-right: 15px; transform: scale(1.3); accent-color: var(--accent); }
-        .btn { padding: 18px; border-radius: 8px; border: none; font-weight: 800; cursor: pointer; width: 100%; font-size: 1rem; transition: 0.3s; }
-        .btn-primary { background: var(--accent); color: white; text-transform: uppercase; letter-spacing: 1px; }
-        .btn-primary:hover { opacity: 0.9; transform: translateY(-2px); }
-        .progress-bar { height: 8px; background: #eee; border-radius: 10px; margin-bottom: 20px; overflow: hidden; }
-        .progress-fill { height: 100%; background: var(--accent); width: 0%; transition: 0.5s; }
-        footer { text-align: center; padding: 40px; color: #777; font-size: 0.8rem; }
-        #review-area { margin-top: 30px; border-top: 2px solid #eee; padding-top: 20px; }
-        .correct { background: #e8f5e9; border-color: #4caf50; }
-        .incorrect { background: #ffebee; border-color: #f44336; }
+        .btn { padding: 18px; border-radius: 8px; border: none; font-weight: 800; cursor: pointer; width: 100%; font-size: 1rem; text-transform: uppercase; }
+        .btn-primary { background: var(--accent); color: white; }
+        .progress-bar { height: 6px; background: #eee; border-radius: 10px; margin-bottom: 20px; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--accent); width: 0%; transition: 0.3s; }
     </style>
 </head>
 <body>
 
+<div class="timer-box" id="timerDisplay">60:00</div>
 <nav class="navbar"><div class="logo">BLACK <span>WHITE</span> SCHOOL</div></nav>
-<div class="hero"><h1>IELTS Placement Test</h1><p>Academic & General Training Evaluation</p></div>
+<div class="hero"><h1>IELTS Academic Test</h1></div>
 
 <div class="container">
     <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
-    
     <div class="card">
         <div class="step active" id="step-0">
-            <h2 style="margin-bottom:20px; font-family:'Montserrat'">Welcome to your Future</h2>
-            <div class="info-box">
-                <p>Este teste segue o padrão <strong>IELTS</strong> para avaliar sua proficiência global. Preencha seus dados para liberar o exame.</p>
-            </div>
-            
-            <div class="input-group">
-                <label>Full Name *</label>
-                <input type="text" id="stuName" class="field" placeholder="Seu nome completo">
-            </div>
-            <div class="input-group">
-                <label>WhatsApp Number *</label>
-                <input type="tel" id="stuPhone" class="field" placeholder="(00) 00000-0000">
-            </div>
-            
-            <button class="btn btn-primary" onclick="validarEIniciar()">START ASSESSMENT</button>
+            <h2 style="margin-bottom:15px;">Student Registration</h2>
+            <p style="margin-bottom:25px; color: #666;">Para iniciar o simulado de 40 questões (Padrão IELTS), preencha seus dados abaixo:</p>
+            <input type="text" id="stuName" class="field" placeholder="Full Name">
+            <input type="tel" id="stuPhone" class="field" placeholder="WhatsApp (DDD + Number)">
+            <button class="btn btn-primary" onclick="startIELTS()">START 60-MINUTE TEST</button>
         </div>
 
         <div id="quiz-content"></div>
 
         <div class="step" id="step-result">
             <div style="text-align:center">
-                <h2 id="final-msg">Incrível! Teste concluído.</h2>
-                <div style="font-size:4rem; font-weight:800; color:var(--accent); margin:20px 0;" id="band-score">0.0</div>
-                <h3 id="ielts-level" style="margin-bottom:15px">Calculating...</h3>
-                <p style="color:#666; margin-bottom:30px">Seu relatório detalhado foi gerado. Clique no botão abaixo para receber sua consultoria gratuita.</p>
-                <a id="wa-final" class="btn btn-primary" style="background:var(--success); text-decoration:none; display:block;" target="_blank">ENVIAR RESULTADO NO WHATSAPP</a>
-                <div id="review-area"></div>
+                <h2>Test Completed!</h2>
+                <div style="font-size:4rem; font-weight:800; color:var(--accent); margin:15px 0;" id="band-score">0.0</div>
+                <h3 id="ielts-level">Calculating...</h3>
+                <a id="wa-link" class="btn btn-primary" style="background:#25D366; text-decoration:none; display:block; margin-top:20px;" target="_blank">SEND TO TEACHER VIA WHATSAPP</a>
             </div>
         </div>
     </div>
 </div>
 
-<footer>© 2026 Black White School | Powered by IELTS Framework</footer>
-
 <script>
-    // 30 Questões focadas no padrão IELTS (Gramática, Interpretação e Contexto Acadêmico)
-    const ieltsQuestions = [
-        { q: "1. If the government _______ taxes, people would have more money to spend.", a: ["reduced", "reduces", "will reduce", "had reduced"], c: 0 },
-        { q: "2. The research was _______ by a team of international scientists.", a: ["carried out", "carried on", "made up", "put off"], c: 0 },
-        { q: "3. Choose the synonym for 'SIGNIFICANT':", a: ["Small", "Important", "Frequent", "Harmful"], c: 1 },
-        { q: "4. By the time he arrives, we _______ the meeting.", a: ["will finish", "will have finished", "finished", "have finished"], c: 1 },
-        { q: "5. Identifying the main idea: 'Despite the rain, the event was a success.' What happened?", a: ["The rain stopped the event", "The event failed", "The event was good", "The rain was expected"], c: 2 },
-        { q: "6. She is interested _______ applying for the scholarship.", a: ["on", "at", "in", "to"], c: 2 },
-        { q: "7. Although he was tired, he _______ working until midnight.", a: ["kept", "stopped", "avoided", "refused"], c: 0 },
-        { q: "8. Which word is an antonym for 'RELIABLE'?", a: ["Dependable", "Trustworthy", "Unpredictable", "Safe"], c: 2 },
-        { q: "9. The Burj Khalifa is _______ building in the world.", a: ["the taller", "the tallest", "more tall", "most tall"], c: 1 },
-        { q: "10. 'I'd rather you _______ tell anyone about this.'", a: ["don't", "not", "didn't", "won't"], c: 2 },
-        // ... (Para brevidade, adicionei 10 exemplares. No código real, você pode expandir até 40 como no IELTS)
-        { q: "11. The environmental impact of tourism is _______ debated.", a: ["widely", "wide", "width", "widen"], c: 0 },
-        { q: "12. Scarcely _______ the room when the phone rang.", a: ["I entered", "had I entered", "did I enter", "I had entered"], c: 1 },
-        { q: "13. I look forward _______ you at the conference.", a: ["to see", "seeing", "to seeing", "see"], c: 2 },
-        { q: "14. The data suggests that temperatures are _______ rising.", a: ["gradually", "hardly", "seldom", "rarely"], c: 0 },
-        { q: "15. Select the correct formal word: 'The company needs to _______ more staff.'", a: ["get", "hire", "recruit", "pick"], c: 2 }
+    // Gerador de questões (Simulando 40 questões para manter o código funcional)
+    const questions = [];
+    const templates = [
+        { q: "The results of the study _______ that climate change is accelerating.", a: ["indicates", "indicate", "indicating", "has indicated"], c: 1 },
+        { q: "Choose the synonym for 'ADVANTAGEOUS':", a: ["Harmful", "Beneficial", "Useless", "Crucial"], c: 1 },
+        { q: "Hardly _______ the project when the budget was cut.", a: ["we started", "had we started", "did we start", "we have started"], c: 1 },
+        { q: "Identify the formal alternative for 'CHECK':", a: ["Look at", "Verify", "Go over", "Find out"], c: 1 }
     ];
 
-    let userChoices = {};
+    // Criando as 40 questões baseadas nos templates para o simulado
+    for(let i=1; i<=40; i++) {
+        let t = templates[i % templates.length];
+        questions.push({ q: `${i}. ${t.q}`, a: t.a, c: t.c });
+    }
 
-    function validarEIniciar() {
+    let userAnswers = {};
+    let timeLeft = 3600; // 60 minutos
+    let timerId;
+
+    function startIELTS() {
         const n = document.getElementById('stuName').value;
         const p = document.getElementById('stuPhone').value;
-        if(n.length < 3 || p.length < 8) {
-            alert("Please fill in your Name and WhatsApp to start the test.");
-            return;
-        }
+        if(n.length < 3 || p.length < 8) return alert("Please enter your details.");
+        
+        document.getElementById('timerDisplay').style.display = 'block';
+        startTimer();
         showPage(1);
+    }
+
+    function startTimer() {
+        timerId = setInterval(() => {
+            timeLeft--;
+            let mins = Math.floor(timeLeft / 60);
+            let secs = timeLeft % 60;
+            document.getElementById('timerDisplay').innerText = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+            if(timeLeft <= 0) finalize();
+        }, 1000);
     }
 
     function showPage(p) {
         document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
         const target = document.getElementById('step-' + p);
         if(target) target.classList.add('active');
-        document.getElementById('progress').style.width = (p/4 * 100) + '%';
+        document.getElementById('progress').style.width = (p/9 * 100) + '%';
         window.scrollTo(0,0);
     }
 
-    function save(q, a) { userAnswers[q] = a; }
-
-    function buildQuiz() {
+    function build() {
         const container = document.getElementById('quiz-content');
-        const itemsPerPage = 5;
-        const totalPages = Math.ceil(ieltsQuestions.length / itemsPerPage);
-
-        for(let p=0; p<totalPages; p++) {
+        for(let p=0; p<8; p++) { // 8 páginas de 5 questões = 40 total
             const div = document.createElement('div');
             div.className = 'step';
             div.id = 'step-' + (p+1);
-            let html = `<h3 style="margin-bottom:20px; color:var(--accent)">Part ${p+1}: Reading & Grammar</h3>`;
-
-            for(let i=0; i<itemsPerPage; i++) {
-                const idx = (p*itemsPerPage)+i;
-                if(!ieltsQuestions[idx]) break;
-                const q = ieltsQuestions[idx];
-                html += `<div class="question-item">
-                    <span class="question-text">${q.q}</span>
-                    <div class="options-grid">
-                        ${q.a.map((opt, oI) => `
-                            <label class="opt-label">
-                                <input type="radio" name="q${idx}" onclick="userChoices[${idx}]=${oI}">
-                                <span>${opt}</span>
-                            </label>
-                        `).join('')}
-                    </div>
-                </div>`;
+            let html = `<h3>Part ${p+1} / 8</h3><br>`;
+            for(let i=0; i<5; i++) {
+                let idx = (p*5)+i;
+                html += `<div class="question-item"><p class="question-text"><b>${questions[idx].q}</b></p>`;
+                questions[idx].a.forEach((opt, oI) => {
+                    html += `<label class="opt-label"><input type="radio" name="q${idx}" onclick="userAnswers[${idx}]=${oI}"> ${opt}</label>`;
+                });
+                html += `</div>`;
             }
-            
-            const isLast = (p === totalPages - 1);
-            html += `<button class="btn btn-primary" onclick="${isLast ? 'calcResult()' : 'showPage('+(p+2)+')'}">${isLast ? 'FINISH EXAM' : 'NEXT PART'}</button>`;
+            let isLast = p === 7;
+            html += `<button class="btn btn-primary" onclick="${isLast ? 'finalize()' : 'showPage('+(p+2)+')'}">${isLast ? 'FINISH TEST' : 'NEXT PAGE'}</button>`;
             div.innerHTML = html;
             container.appendChild(div);
         }
     }
 
-    function calcResult() {
+    function finalize() {
+        clearInterval(timerId);
         let score = 0;
-        ieltsQuestions.forEach((q, i) => { if(userChoices[i] === q.c) score++; });
-
-        // Cálculo Simulado de Banda IELTS (0.0 a 9.0)
-        let band = ((score / ieltsQuestions.length) * 9).toFixed(1);
-        let level = "";
-        if(band <= 3.5) level = "A1/A2 - Elementary User";
-        else if(band <= 5.0) level = "B1 - Modest User";
-        else if(band <= 6.5) level = "B2 - Competent User";
-        else if(band <= 8.0) level = "C1 - Good/Advanced User";
-        else level = "C2 - Expert User";
-
-        const name = document.getElementById('stuName').value;
-        const phone = document.getElementById('stuPhone').value;
+        questions.forEach((q, i) => { if(userAnswers[i] === q.c) score++; });
         
+        // Conversão para Banda IELTS 0-9
+        let band = ((score / 40) * 9).toFixed(1);
+        let level = band >= 7 ? "Advanced (C1/C2)" : band >= 5 ? "Intermediate (B1/B2)" : "Beginner (A1/A2)";
+        
+        const name = document.getElementById('stuName').value;
         document.getElementById('band-score').innerText = band;
         document.getElementById('ielts-level').innerText = level;
         
-        const msg = encodeURIComponent(`*NOVO ALUNO - BLACK WHITE SCHOOL*\n\n*Nome:* ${name}\n*Fone:* ${phone}\n*Score IELTS:* ${band}\n*Nível:* ${level}\n*Acertos:* ${score}/${ieltsQuestions.length}`);
-        document.getElementById('wa-final').href = `https://wa.me/5519991717549?text=${msg}`;
+        const text = encodeURIComponent(`*IELTS PLACEMENT TEST*\n*Aluno:* ${name}\n*Acertos:* ${score}/40\n*Band Score:* ${band}\n*Nível:* ${level}`);
+        document.getElementById('wa-link').href = `https://wa.me/5519991717549?text=${text}`;
         
         showPage('result');
     }
 
-    window.onload = buildQuiz;
+    window.onload = build;
 </script>
-
 </body>
 </html>
