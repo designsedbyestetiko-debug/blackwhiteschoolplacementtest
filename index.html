@@ -53,6 +53,11 @@
         .explanation { margin-top: 15px; padding: 14px; background: rgba(168, 199, 250, 0.08); border-radius: 14px; font-size: 0.9rem; color: var(--accent); line-height: 1.4; }
 
         input.field { width: 100%; background: #2b2c2f; border: 1px solid var(--border); padding: 18px; border-radius: 18px; color: #fff; margin-bottom: 20px; font-size: 1rem; }
+        
+        .btn-group-wa { display: flex; flex-direction: column; gap: 15px; margin-bottom: 40px; }
+        .btn-wa { background-color: #25D366; color: #fff; text-decoration: none; padding: 16px; border-radius: 100px; font-weight: 600; text-align: center; border: none; cursor: pointer; font-size: 1rem; transition: 0.3s; font-family: 'Open Sans', sans-serif; }
+        .btn-wa:hover { opacity: 0.85; transform: translateY(-2px); }
+
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
@@ -88,7 +93,12 @@
                     </div>
                 </div>
             </div>
-            <button class="btn" id="wa-btn" style="width:100%; margin-bottom:40px; background-color:#25D366; color:#fff">Enviar resultado no WhatsApp</button>
+
+            <div class="btn-group-wa">
+                <button class="btn-wa" onclick="sendToWhatsApp('5519991717549')">Enviar Resultado para Unidade Jd. Eldorado</button>
+                <button class="btn-wa" onclick="sendToWhatsApp('5519982183404')" style="background-color: #128C7E;">Enviar Resultado para Unidade Pq. Ecológico</button>
+            </div>
+
             <h3 style="margin-bottom:20px">Revisão e Feedback</h3>
             <div id="review-area"></div>
         </div>
@@ -177,6 +187,11 @@
             div.innerHTML = html; container.appendChild(div);
         }
     }
+
+    let finalBand = "0.0";
+    let finalRight = 0;
+    let finalAccuracy = "0%";
+
     function finalize() {
         let right = 0, wrong = 0;
         let reviewHtml = "";
@@ -185,17 +200,26 @@
             if(isC) right++; else wrong++;
             reviewHtml += `<div class="review-item ${isC ? 'review-correct' : 'review-incorrect'}"><p><strong>${i+1}.</strong> ${q.q}</p><p style="font-size:0.9rem">Sua resposta: ${userAnswers[i] !== undefined ? q.a[userAnswers[i]] : "Em branco"}</p>${!isC ? `<p style="font-size:0.9rem; color:var(--accent)">Correta: ${q.a[q.c]}</p>` : ""}<div class="explanation"><strong>Dica:</strong> ${q.f}</div></div>`;
         });
-        document.getElementById('res-band').innerText = ((right / 40) * 9).toFixed(1);
-        document.getElementById('res-accuracy').innerText = Math.round((right/40)*100) + "%";
+        
+        finalBand = ((right / 40) * 9).toFixed(1);
+        finalRight = right;
+        finalAccuracy = Math.round((right/40)*100) + "%";
+
+        document.getElementById('res-band').innerText = finalBand;
+        document.getElementById('res-accuracy').innerText = finalAccuracy;
         document.getElementById('res-right').innerText = right;
         document.getElementById('res-wrong').innerText = wrong;
         document.getElementById('review-area').innerHTML = reviewHtml;
-        document.getElementById('wa-btn').onclick = () => {
-            const msg = encodeURIComponent(`*IELTS RESULT - Black White School*\n*Nome:* ${document.getElementById('stuName').value}\n*Score:* ${((right/40)*9).toFixed(1)}\n*Acertos:* ${right}/40`);
-            window.open(`https://wa.me/5519991717549?text=${msg}`);
-        };
+        
         showPage('result');
     }
+
+    function sendToWhatsApp(phone) {
+        const name = document.getElementById('stuName').value;
+        const msg = encodeURIComponent(`*IELTS RESULT - Black White School*\n*Nome:* ${name}\n*Score:* ${finalBand}\n*Acertos:* ${finalRight}/40\n*Precisão:* ${finalAccuracy}`);
+        window.open(`https://wa.me/${phone}?text=${msg}`);
+    }
+
     window.onload = buildQuiz;
 </script>
 </body>
