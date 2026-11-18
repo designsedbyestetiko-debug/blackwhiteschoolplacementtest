@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -75,7 +76,7 @@
     <div class="card">
         <div class="step active" id="step-0">
             <h2 style="margin-bottom:12px">Teste de Nivelamento IELTS</h2>
-            <p style="color:var(--text-secondary); margin-bottom:30px">Avalie seu inglês com questões oficiais e feedback instantâneo.</p>
+            <p style="color:var(--text-secondary); margin-bottom:30px">Avalie seu inglês com questões autorais de nivelamento e feedback instantâneo.</p>
             <input type="text" id="stuName" class="field" placeholder="Nome Completo">
             <input type="tel" id="stuPhone" class="field" placeholder="WhatsApp">
             <button class="btn" onclick="startTest()">Começar Teste</button>
@@ -107,53 +108,46 @@
 
 <script>
     const questions = [
-        // 1-10: NÍVEL BÁSICO / FUNDAMENTOS
-        { q: "Where is the cat? It's _______ the chair.", a: ["under", "between", "among", "through"], c: 0, f: "Usamos 'under' para algo que está embaixo de um objeto." },
-        { q: "I have _______ apple in my bag.", a: ["a", "an", "the", "some"], c: 1, f: "Usamos 'an' antes de palavras com som de vogal." },
-        { q: "What is the plural of 'child'?", a: ["childs", "childes", "children", "childrens"], c: 2, f: "'Children' é um plural irregular de 'child'." },
-        { q: "She _______ to the gym every morning.", a: ["go", "goes", "going", "gone"], c: 1, f: "Para He/She/It no presente, adicionamos 'es' ao verbo 'go'." },
-        { q: "Monday, Tuesday, _______, Thursday...", a: ["Friday", "Saturday", "Wednesday", "Sunday"], c: 2, f: "A sequência correta é Segunda, Terça, Quarta (Wednesday)." },
-        { q: "I _______ a student at Black White School.", a: ["is", "am", "are", "be"], c: 1, f: "Com o pronome 'I', usamos a forma 'am' do verbo To Be." },
-        { q: "Do you have _______ friends in London?", a: ["much", "many", "a lot", "very"], c: 1, f: "Usamos 'many' para substantivos contáveis no plural." },
-        { q: "_______ is your birthday?", a: ["When", "Who", "What", "Where"], c: 0, f: "'When' é usado para perguntar sobre tempo ou datas." },
-        { q: "My father's sister is my _______.", a: ["aunt", "uncle", "cousin", "niece"], c: 0, f: "A irmã do pai é a tia (aunt)." },
-        { q: "He _______ very happy yesterday.", a: ["is", "was", "were", "been"], c: 1, f: "O passado do verbo To Be para 'He' é 'was'." },
-
-        // 11-20: NÍVEL PRÉ-INTERMEDIÁRIO
-        { q: "I _______ seen that movie before.", a: ["has", "have", "am", "did"], c: 1, f: "Present Perfect utiliza 'have' + particípio para experiências passadas." },
-        { q: "If it rains tomorrow, we _______ the game.", a: ["cancel", "would cancel", "will cancel", "canceled"], c: 2, f: "First Conditional: 'If + Presente' gera 'Will + Verbo'." },
-        { q: "This house is _______ than the other one.", a: ["big", "bigger", "biggest", "more big"], c: 1, f: "Comparativos de adjetivos curtos usam a terminação '-er'." },
-        { q: "I _______ working when the phone rang.", a: ["was", "were", "did", "am"], c: 0, f: "Past Continuous descreve uma ação em progresso no passado." },
-        { q: "You _______ smoke here. It's against the law.", a: ["mustn't", "don't have to", "couldn't", "won't"], c: 0, f: "'Mustn't' é usado para proibições legais ou fortes." },
-        { q: "I'm looking forward to _______ you.", a: ["meet", "meeting", "met", "to meet"], c: 1, f: "Após 'look forward to', o verbo deve estar no gerúndio (-ing)." },
-        { q: "He is the _______ person I know.", a: ["funny", "funnier", "funniest", "most funny"], c: 2, f: "Superlativo de adjetivos curtos terminados em 'y' usa '-iest'." },
-        { q: "She has been studying here _______ three months.", a: ["since", "for", "at", "during"], c: 1, f: "Usamos 'for' para indicar duração de tempo." },
-        { q: "_______ car is this parked outside?", a: ["Who", "Whom", "Whose", "Who's"], c: 2, f: "'Whose' indica posse (de quem)." },
-        { q: "I _______ go to the beach if I finish my work.", a: ["might", "must", "should", "am"], c: 0, f: "'Might' expressa uma possibilidade remota ou incerta." },
-
-        // 21-30: NÍVEL INTERMEDIÁRIO / IELTS 5-6
-        { q: "The book _______ was written by Orwell is famous.", a: ["who", "which", "whose", "whom"], c: 1, f: "Usamos 'which' para pronomes relativos referindo-se a objetos." },
-        { q: "I _______ my car repaired yesterday.", a: ["had", "did", "gotten", "was"], c: 0, f: "Estrutura causativa: 'Have something done'." },
-        { q: "Unless it _______, we will go for a walk.", a: ["rains", "doesn't rain", "will rain", "rained"], c: 0, f: "'Unless' já significa 'se não', exigindo o verbo na afirmativa." },
-        { q: "I wish I _______ more time to study.", a: ["have", "had", "will have", "would have"], c: 1, f: "Desejos sobre o presente usam o Past Simple após 'wish'." },
-        { q: "The results will _______ next week.", a: ["be announce", "be announced", "announce", "announced"], c: 1, f: "Voz passiva no futuro: 'will be' + particípio passado." },
-        { q: "I'm not used to _______ up so early.", a: ["get", "getting", "got", "gets"], c: 1, f: "A expressão 'be used to' exige o verbo no gerúndio." },
-        { q: "He denied _______ the money.", a: ["steal", "to steal", "stealing", "stolen"], c: 2, f: "O verbo 'deny' é seguido obrigatoriamente por gerúndio." },
-        { q: "By the time he arrived, we _______ already left.", a: ["have", "had", "were", "did"], c: 1, f: "Past Perfect indica uma ação que ocorreu antes de outra no passado." },
-        { q: "The _______ of the research was unexpected.", a: ["outcome", "outgo", "output", "outlook"], c: 0, f: "'Outcome' é o termo acadêmico para resultado de um estudo." },
-        { q: "I'd rather you _______ tell anyone about this.", a: ["don't", "didn't", "not", "won't"], c: 1, f: "'Would rather' com novo sujeito pede Past Simple." },
-
-        // 31-40: NÍVEL AVANÇADO / IELTS 7+
-        { q: "Scarcely _______ the room when the phone rang.", a: ["I had entered", "had I entered", "I entered", "did I enter"], c: 1, f: "Inversão gramatical após advérbios negativos no início da frase." },
-        { q: "It's high time the government _______ action.", a: ["takes", "took", "take", "has taken"], c: 1, f: "A expressão 'It's high time' exige o uso do Past Simple." },
-        { q: "The manager suggested that he _______ harder.", a: ["work", "works", "worked", "to work"], c: 0, f: "Subjuntivo acadêmico exige a forma base do verbo (work)." },
-        { q: "In _______ of the rain, the event continued.", a: ["spite", "despite", "although", "even"], c: 0, f: "A locução correta é 'In spite of'." },
-        { q: "Had I known about the traffic, I _______ earlier.", a: ["would leave", "left", "would have left", "will leave"], c: 2, f: "Inversão da Third Conditional para situações hipotéticas passadas." },
-        { q: "The criteria _______ used for the selection were strict.", a: ["was", "were", "is", "has been"], c: 1, f: "'Criteria' é o plural da palavra latina 'criterion'." },
-        { q: "Never _______ such a beautiful sunset.", a: ["I have seen", "have I seen", "I saw", "saw I"], c: 1, f: "Outro caso de inversão enfática com o advérbio 'Never'." },
-        { q: "The problem is _______ complicated to solve easily.", a: ["too", "very", "enough", "so"], c: 0, f: "Usamos 'too + adjetivo + to' para indicar excesso negativo." },
-        { q: "Objective data _______ that the theory is correct.", a: ["suggest", "suggests", "suggesting", "is suggest"], c: 1, f: "Concordância verbal: 'Data' no singular (coletivo) ou plural." },
-        { q: "I found the lecture _______ interesting.", a: ["highly", "high", "height", "higher"], c: 0, f: "Usamos o advérbio 'highly' para intensificar adjetivos acadêmicos." }
+        {"q": "My brother ______ twelve years old.", "a": ["am", "is", "are", "be"], "c": 1, "f": "Usamos 'is' com sujeito na terceira pessoa do singular no presente."},
+        {"q": "There are three ______ on the bus.", "a": ["childs", "childrens", "children", "childes"], "c": 2, "f": "O plural irregular de 'child' é 'children'."},
+        {"q": "We ______ English on Mondays.", "a": ["studies", "studying", "study", "studied"], "c": 2, "f": "Com 'we', o presente simples afirmativo usa a forma base 'study'."},
+        {"q": "Choose the correct question to ask someone's name.", "a": ["What your name is?", "What is your name?", "What name you are?", "What does your name?"], "c": 1, "f": "Em perguntas com 'be', o verbo vem antes do sujeito: 'What is your name?'."},
+        {"q": "I can see two ______ in the garden.", "a": ["box", "boxs", "boxes", "boxies"], "c": 2, "f": "Substantivos terminados em 'x' normalmente recebem '-es' no plural."},
+        {"q": "My parents ______ at home right now.", "a": ["is", "am", "are", "be"], "c": 2, "f": "'My parents' é um sujeito plural, portanto usamos 'are'."},
+        {"q": "She ______ coffee every morning.", "a": ["drink", "drinks", "drinking", "drank"], "c": 1, "f": "No presente simples, acrescentamos '-s' com 'she'."},
+        {"q": "Yesterday was Friday. Today is ______.", "a": ["Thursday", "Sunday", "Saturday", "Monday"], "c": 2, "f": "O dia seguinte a Friday (sexta-feira) é Saturday (sábado)."},
+        {"q": "There ______ a book on the table.", "a": ["are", "have", "is", "be"], "c": 2, "f": "Na estrutura 'there is/are', usamos 'is' com um substantivo singular."},
+        {"q": "Choose the correct negative sentence.", "a": ["He don't like milk.", "He doesn't likes milk.", "He doesn't like milk.", "He not like milk."], "c": 2, "f": "Após 'doesn't', usamos a forma base do verbo: 'like'."},
+        {"q": "We ______ to the museum last Sunday.", "a": ["go", "went", "gone", "going"], "c": 1, "f": "'Last Sunday' indica passado concluído; o passado de 'go' é 'went'."},
+        {"q": "Look through the window! The children ______ in the garden right now.", "a": ["played", "are playing", "plays", "have played"], "c": 1, "f": "A expressão 'right now' indica uma ação em andamento no momento da fala. Usamos o present continuous: are + verbo com -ing.",
+        {"q": "The blue suitcase is ______ than the red one.", "a": ["heavy", "heaviest", "more heavy", "heavier"], "c": 3, "f": "O comparativo regular de 'heavy' é 'heavier'."},
+        {"q": "I have lived in this city ______ 2021.", "a": ["for", "since", "during", "ago"], "c": 1, "f": "'Since' introduz o ponto inicial de uma situação que continua."},
+        {"q": "You ______ wear a seat belt while driving. It's required by law.", "a": ["must", "might", "would", "could"], "c": 0, "f": "'Must' expressa obrigação; aqui a obrigatoriedade é explicitada pela lei."},
+        {"q": "I was cooking dinner when the lights ______ out.", "a": ["go", "gone", "went", "going"], "c": 2, "f": "A interrupção pontual no passado pede 'went out'."},
+        {"q": "This is the ______ film I have ever seen.", "a": ["good", "better", "best", "well"], "c": 2, "f": "Com 'the' e uma comparação de toda a experiência, usamos o superlativo 'best'."},
+        {"q": "Could you tell me where the nearest bank ______?", "a": ["is", "does", "be", "are"], "c": 0, "f": "Em perguntas indiretas, a ordem é sujeito + verbo: 'where the nearest bank is'."},
+        {"q": "If it ______ tomorrow, we'll stay indoors.", "a": ["will snow", "snowed", "snows", "snowing"], "c": 2, "f": "No first conditional, a oração com 'if' usa present simple."},
+        {"q": "I haven't finished my homework ______.", "a": ["already", "yet", "still", "ever"], "c": 1, "f": "Em uma negativa no present perfect, 'yet' indica que algo não aconteceu até agora."},
+        {"q": "The report ______ by the finance team yesterday.", "a": ["was prepared", "prepared", "has preparing", "was prepare"], "c": 0, "f": "Voz passiva no passado simples: 'was/were + past participle'."},
+        {"q": "The woman ______ car was stolen called the police.", "a": ["who", "which", "whose", "whom"], "c": 2, "f": "'Whose' estabelece a relação de posse entre a mulher e o carro."},
+        {"q": "By the time we reached the station, the train ______.", "a": ["has left", "had left", "leaves", "is leaving"], "c": 1, "f": "O past perfect mostra que a partida ocorreu antes de chegarmos à estação."},
+        {"q": "If I ______ more free time, I would learn Italian.", "a": ["have", "will have", "had", "having"], "c": 2, "f": "No second conditional, usamos past simple na oração com 'if'."},
+        {"q": "I'm used to ______ early because my shift starts at six.", "a": ["wake up", "waking up", "woke up", "have woken up"], "c": 1, "f": "'Be used to' é seguido de substantivo ou verbo em '-ing'."},
+        {"q": "She apologized ______ arriving late.", "a": ["to", "for", "of", "with"], "c": 1, "f": "A combinação correta é 'apologize for + -ing'."},
+        {"q": "The teacher asked us ______ our phones during the exam.", "a": ["not use", "don't use", "not to use", "to not using"], "c": 2, "f": "A estrutura é 'ask someone not to do something'."},
+        {"q": "The new policy will come ______ effect on January 1.", "a": ["into", "on", "at", "by"], "c": 0, "f": "A colocação fixa é 'come into effect' (entrar em vigor)."},
+        {"q": "Despite ______ tired, Marta completed the assignment.", "a": ["be", "being", "was", "she was"], "c": 1, "f": "Após 'despite', podemos usar substantivo ou uma forma em '-ing'."},
+        {"q": "He denied ______ the confidential document.", "a": ["to share", "share", "sharing", "shared"], "c": 2, "f": "Em construções como esta, 'deny' é seguido de verbo em '-ing'."},
+        {"q": "Not until the results were published ______ the error.", "a": ["the researchers noticed", "did the researchers notice", "the researchers did notice", "had the researchers noticing"], "c": 1, "f": "Depois de 'Not until' no início da oração, há inversão entre auxiliar e sujeito."},
+        {"q": "Had the committee been informed earlier, it ______ a different decision.", "a": ["would make", "will have made", "would have made", "had made"], "c": 2, "f": "A oração invertida corresponde a um third conditional: 'would have + particípio'."},
+        {"q": "The proposal was rejected on the grounds that it was not financially ______.", "a": ["viable", "visible", "vivid", "vitality"], "c": 0, "f": "'Financially viable' significa financeiramente exequível; as outras opções não expressam isso."},
+        {"q": "Scarcely had the meeting begun ______ the fire alarm sounded.", "a": ["than", "when", "that", "while"], "c": 1, "f": "A construção formal é 'scarcely ... when'."},
+        {"q": "It is essential that every applicant ______ the form before the deadline.", "a": ["submits to", "submitting", "submit", "to submit"], "c": 2, "f": "No inglês formal, 'it is essential that' pode exigir o subjuntivo com verbo na forma base."},
+        {"q": "The findings are consistent ______ those of the earlier study.", "a": ["to", "with", "for", "by"], "c": 1, "f": "A colocação correta é 'consistent with'."},
+        {"q": "No sooner had she opened the presentation ______ the projector stopped working.", "a": ["when", "that", "than", "as"], "c": 2, "f": "A construção correlativa é 'no sooner ... than'."},
+        {"q": "The report is unlikely to be approved, ______ substantial revisions are made.", "a": ["unless", "despite", "whereas", "because of"], "c": 0, "f": "'Unless' introduz a condição necessária para contrariar a previsão negativa."},
+        {"q": "Choose the sentence that correctly uses a reduced relative clause.", "a": ["The documents submitting yesterday are missing.", "The documents submitted yesterday are missing.", "The documents were submitted yesterday are missing.", "The documents which submitted yesterday are missing."], "c": 1, "f": "'Submitted yesterday' reduz a oração passiva 'which were submitted yesterday'."},
+        {"q": "The evidence was too ______ to justify such a far-reaching conclusion.", "a": ["conclusive", "inconclusive", "conclude", "conclusion"], "c": 1, "f": "'Inconclusive' indica evidências insuficientes para sustentar uma conclusão definitiva."}
     ];
 
     let userAnswers = {};
