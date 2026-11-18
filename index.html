@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -119,7 +118,7 @@
         {"q": "There ______ a book on the table.", "a": ["are", "have", "is", "be"], "c": 2, "f": "Na estrutura 'there is/are', usamos 'is' com um substantivo singular."},
         {"q": "Choose the correct negative sentence.", "a": ["He don't like milk.", "He doesn't likes milk.", "He doesn't like milk.", "He not like milk."], "c": 2, "f": "Após 'doesn't', usamos a forma base do verbo: 'like'."},
         {"q": "We ______ to the museum last Sunday.", "a": ["go", "went", "gone", "going"], "c": 1, "f": "'Last Sunday' indica passado concluído; o passado de 'go' é 'went'."},
-        {"q": "Look through the window! The children ______ in the garden right now.", "a": ["played", "are playing", "plays", "have played"], "c": 1, "f": "A expressão 'right now' indica uma ação em andamento no momento da fala. Usamos o present continuous: are + verbo com -ing.",
+        {"q": "Look through the window! The children ______ in the garden right now.", "a": ["played", "are playing", "plays", "have played"], "c": 1, "f": "A expressão 'right now' indica uma ação em andamento no momento da fala. Usamos o present continuous: are + verbo com -ing."},
         {"q": "The blue suitcase is ______ than the red one.", "a": ["heavy", "heaviest", "more heavy", "heavier"], "c": 3, "f": "O comparativo regular de 'heavy' é 'heavier'."},
         {"q": "I have lived in this city ______ 2021.", "a": ["for", "since", "during", "ago"], "c": 1, "f": "'Since' introduz o ponto inicial de uma situação que continua."},
         {"q": "You ______ wear a seat belt while driving. It's required by law.", "a": ["must", "might", "would", "could"], "c": 0, "f": "'Must' expressa obrigação; aqui a obrigatoriedade é explicitada pela lei."},
@@ -153,6 +152,7 @@
     let userAnswers = {};
     function startTest() {
         if(document.getElementById('stuName').value.length < 3) return alert("Digite seu nome.");
+        if (!document.getElementById('step-1')) buildQuiz();
         showPage(1);
     }
     function showPage(p) {
@@ -163,6 +163,7 @@
     }
     function buildQuiz() {
         const container = document.getElementById('quiz-content');
+        if (document.getElementById('step-1')) return;
         const qPerPage = 8;
         for(let p=0; p < 5; p++) {
             const div = document.createElement('div');
@@ -214,7 +215,9 @@
         window.open(`https://wa.me/${phone}?text=${msg}`);
     }
 
-    window.onload = buildQuiz;
+    // Inicializa imediatamente porque o script fica depois do HTML.
+    // Não depende do evento window.onload, que pode ser sobrescrito.
+    buildQuiz();
 </script>
 </body>
 </html>
